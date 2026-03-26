@@ -1,0 +1,24 @@
+[
+  {
+    "id": 16,
+    "name": "For Men",
+    "slug": "for-men",
+    "description": "",
+    "count": 15,
+    "yoast_head_json": {
+      "title": "Perfume Oil For Men - The Perfume Yard",
+      "description": "Discover premium perfume oils and sprays for men at The Perfume Yard."
+    }
+  },
+  {
+    "id": 17,
+    "name": "For women",
+    "slug": "for-women",
+    "description": "Explore luxurious perfume oils and sprays for women at The Perfume Yard. Elegant, long-lasting fragrances designed to captivate and inspire.",
+    "count": 5,
+    "yoast_head_json": {
+      "title": "Perfume Oil For women - The Perfume Yard",
+      "description": "Explore luxurious perfume oils and sprays for women at The Perfume Yard. Elegant, long-lasting fragrances designed to captivate and inspire."
+    }
+  }
+]
