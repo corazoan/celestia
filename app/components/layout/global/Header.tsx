@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import categories from "@/app/content/categories.json";
+import Image from "next/image";
 
 // Simplified Search Skeleton
 function SearchSkeleton() {
@@ -20,7 +21,10 @@ function SearchSkeleton() {
           <div className="h-6 bg-gray-200 dark:bg-zinc-800 rounded animate-pulse mb-3 w-32"></div>
           <div className="py-3 flex flex-col gap-2">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-4 bg-gray-200 dark:bg-zinc-800 rounded animate-pulse w-24"></div>
+              <div
+                key={i}
+                className="h-4 bg-gray-200 dark:bg-zinc-800 rounded animate-pulse w-24"
+              ></div>
             ))}
           </div>
         </div>
@@ -28,7 +32,10 @@ function SearchSkeleton() {
           <div className="h-6 bg-gray-200 dark:bg-zinc-800 rounded animate-pulse mb-3 w-48"></div>
           <div className="py-3 flex flex-col md:flex-row gap-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="flex md:flex-col items-start gap-3 flex-1">
+              <div
+                key={i}
+                className="flex md:flex-col items-start gap-3 flex-1"
+              >
                 <div className="size-20 bg-gray-200 dark:bg-zinc-800 rounded animate-pulse"></div>
                 <div className="flex-1">
                   <div className="h-4 bg-gray-200 dark:bg-zinc-800 rounded animate-pulse mb-2 w-20"></div>
@@ -109,8 +116,8 @@ export default function Header() {
                 />
               </svg>
             </button>
-            <button 
-              className="md:hidden hover:opacity-70 transition-opacity" 
+            <button
+              className="md:hidden hover:opacity-70 transition-opacity"
               onClick={() => setIsSearchOpen(true)}
               aria-label="Search"
             >
@@ -151,7 +158,11 @@ export default function Header() {
               </span>
             </Link>
             {!username ? (
-              <Link href="/login" className="pl-1 hover:opacity-70 transition-opacity" aria-label="Login">
+              <Link
+                href="/login"
+                className="pl-1 hover:opacity-70 transition-opacity"
+                aria-label="Login"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="size-5"
@@ -168,8 +179,11 @@ export default function Header() {
                 </svg>
               </Link>
             ) : (
-              <Link href="/account" className="ml-2 hover:opacity-70 transition-opacity">
-                <img
+              <Link
+                href="/account"
+                className="ml-2 hover:opacity-70 transition-opacity"
+              >
+                <Image
                   src={`https://avatar.iran.liara.run/public/boy?username=${username}`}
                   alt="User avatar"
                   className="size-6 rounded-full"
@@ -186,18 +200,26 @@ export default function Header() {
               onClick={() => setIsSearchOpen(false)}
             />
             {/* For now just show skeleton as placeholder overlay */}
-            <div className="z-[60] relative">
-               <div className="fixed z-[70] top-5 right-5 md:right-10 text-foreground">
-                  <button 
-                    onClick={() => setIsSearchOpen(false)}
-                    className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full transition-colors"
+            <div className="z-60 relative">
+              <div className="fixed z-70 top-5 right-5 md:right-10 text-foreground">
+                <button
+                  onClick={() => setIsSearchOpen(false)}
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="size-6"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-                    </svg>
-                  </button>
-               </div>
-               <SearchSkeleton />
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                  </svg>
+                </button>
+              </div>
+              <SearchSkeleton />
             </div>
           </>
         )}

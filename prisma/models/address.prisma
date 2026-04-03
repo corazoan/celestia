@@ -1,0 +1,19 @@
+model Address {
+  id          Int      @id @default(autoincrement())
+  firstName   String
+  lastName    String?
+  phoneNumber String
+  landmark    String?
+  flatNumber  String
+  city        String
+  pincode     String
+  latitude    String?
+  longitude   String?
+  state       String
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("addresses")
+}

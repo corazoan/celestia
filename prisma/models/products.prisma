@@ -1,0 +1,20 @@
+model Product {
+  id             Int              @id @default(autoincrement())
+  productImages  String[]
+  name           String
+  productType    ProductType      @default(SINGLE)
+  stock          Int?
+  regularPrice   Float?
+  sellPrice      Float?
+  orderItems     OrderItem[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  ProductVariant ProductVariant[]
+
+  @@map("products")
+}
+
+enum ProductType {
+  SINGLE
+  VARIANT
+}
