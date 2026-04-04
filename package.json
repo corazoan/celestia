@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "migrate:dev": "pnpm dlx prisma migrate dev"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^6.19.3",

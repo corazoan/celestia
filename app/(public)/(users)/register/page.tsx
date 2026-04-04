@@ -14,7 +14,7 @@ export default function RegisterPage() {
     registerAction,
     initialRegisterState,
   );
-  const [turnstileStatus, setTurnstileStatus] = useState<
+  const [, setTurnstileStatus] = useState<
     "success" | "error" | "expired" | "required"
   >("required");
   const [error, setError] = useState<string | null>(null);
@@ -24,10 +24,10 @@ export default function RegisterPage() {
       <div className="w-full max-w-lg bg-background">
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold mb-3 tracking-tighter uppercase italic">
+          <h1 className="text-3xl font-bold mb-3 tracking-tighter italic">
             Create Account
           </h1>
-          <p className="text-zinc-500 dark:text-zinc-400 text-sm uppercase tracking-widest font-medium">
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm tracking-widest font-medium">
             Join Celestia for exclusive access
           </p>
         </div>
@@ -35,7 +35,7 @@ export default function RegisterPage() {
         {/* Status Messages */}
         {(state.error || state.success || error) && (
           <div
-            className={`mb-8 p-4 border text-xs uppercase tracking-widest font-bold ${
+            className={`mb-8 p-4 border text-xs tracking-widest font-bold ${
               state.success
                 ? "bg-emerald-50/50 dark:bg-emerald-950/10 border-emerald-200 dark:border-emerald-900/50 text-emerald-600 dark:text-emerald-400"
                 : "bg-red-50/50 dark:bg-red-950/10 border-red-200 dark:border-red-900/50 text-red-600 dark:text-red-400"
@@ -91,7 +91,7 @@ export default function RegisterPage() {
           <div className="grid gap-2">
             <label
               htmlFor="email"
-              className="text-xs uppercase tracking-widest font-bold text-zinc-500"
+              className="text-xs tracking-widest font-bold text-zinc-500"
             >
               Email Address *
             </label>
@@ -101,7 +101,7 @@ export default function RegisterPage() {
               name="email"
               placeholder="you@example.com"
               required
-              className="h-12 w-full px-4 bg-transparent border border-zinc-200 dark:border-zinc-800 focus:outline-hidden focus:ring-1 focus:ring-foreground transition-all uppercase text-sm tracking-wide placeholder:text-zinc-300 dark:placeholder:text-zinc-700"
+              className="h-12 w-full px-4 bg-transparent border border-zinc-200 dark:border-zinc-800 focus:outline-hidden focus:ring-1 focus:ring-foreground transition-all text-sm tracking-wide placeholder:text-zinc-300 dark:placeholder:text-zinc-700"
             />
           </div>
 
@@ -110,7 +110,7 @@ export default function RegisterPage() {
             <div className="grid gap-2">
               <label
                 htmlFor="firstName"
-                className="text-xs uppercase tracking-widest font-bold text-zinc-500"
+                className="text-xs tracking-widest font-bold text-zinc-500"
               >
                 First Name *
               </label>
@@ -120,13 +120,13 @@ export default function RegisterPage() {
                 name="firstName"
                 placeholder="John"
                 required
-                className="h-12 w-full px-4 bg-transparent border border-zinc-200 dark:border-zinc-800 focus:outline-hidden focus:ring-1 focus:ring-foreground transition-all uppercase text-sm tracking-wide placeholder:text-zinc-300 dark:placeholder:text-zinc-700"
+                className="h-12 w-full px-4 bg-transparent border border-zinc-200 dark:border-zinc-800 focus:outline-hidden focus:ring-1 focus:ring-foreground transition-all text-sm tracking-wide placeholder:text-zinc-300 dark:placeholder:text-zinc-700"
               />
             </div>
             <div className="grid gap-2">
               <label
                 htmlFor="lastName"
-                className="text-xs uppercase tracking-widest font-bold text-zinc-500"
+                className="text-xs tracking-widest font-bold text-zinc-500"
               >
                 Last Name *
               </label>
@@ -136,7 +136,7 @@ export default function RegisterPage() {
                 name="lastName"
                 placeholder="Doe"
                 required
-                className="h-12 w-full px-4 bg-transparent border border-zinc-200 dark:border-zinc-800 focus:outline-hidden focus:ring-1 focus:ring-foreground transition-all uppercase text-sm tracking-wide placeholder:text-zinc-300 dark:placeholder:text-zinc-700"
+                className="h-12 w-full px-4 bg-transparent border border-zinc-200 dark:border-zinc-800 focus:outline-hidden focus:ring-1 focus:ring-foreground transition-all text-sm tracking-wide placeholder:text-zinc-300 dark:placeholder:text-zinc-700"
               />
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function RegisterPage() {
           <div className="grid gap-2">
             <label
               htmlFor="phone"
-              className="text-xs uppercase tracking-widest font-bold text-zinc-500"
+              className="text-xs tracking-widest font-bold text-zinc-500"
             >
               Phone Number *
             </label>
@@ -159,72 +159,75 @@ export default function RegisterPage() {
               minLength={10}
               maxLength={10}
               title="Should be 10 digits"
-              className="h-12 w-full px-4 bg-transparent border border-zinc-200 dark:border-zinc-800 focus:outline-hidden focus:ring-1 focus:ring-foreground transition-all uppercase text-sm tracking-wide placeholder:text-zinc-300 dark:placeholder:text-zinc-700"
+              className="h-12 w-full px-4 bg-transparent border border-zinc-200 dark:border-zinc-800 focus:outline-hidden focus:ring-1 focus:ring-foreground transition-all text-sm tracking-wide placeholder:text-zinc-300 dark:placeholder:text-zinc-700"
             />
           </div>
 
           {/* Button */}
-          <button
-            type="submit"
-            disabled={isPending}
-            className="h-12 w-full bg-foreground text-background font-bold uppercase tracking-widest text-xs hover:opacity-90 transition-opacity flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-          >
-            {isPending ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-5 animate-spin"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-              </svg>
-            ) : (
-              <>
-                Continue
+          <div className="grid gap-4">
+            <Turnstile
+              siteKey={env.NEXT_PUBLIC_CLOUDFLARED_SITE_KEY}
+              retry="auto"
+              refreshExpired="auto"
+              sandbox={env.NEXT_PUBLIC_ENV === "development"}
+              onError={() => {
+                setTurnstileStatus("error");
+                setError("Security check failed. Please try again.");
+              }}
+              onExpire={() => {
+                setTurnstileStatus("expired");
+                setError("Security check expired. Please verify again.");
+              }}
+              onLoad={() => {
+                setTurnstileStatus("required");
+                setError(null);
+              }}
+              onVerify={() => {
+                setTurnstileStatus("success");
+                setError(null);
+              }}
+            />
+
+            <button
+              type="submit"
+              disabled={isPending}
+              className="h-12 w-full bg-foreground text-background font-bold tracking-widest text-xs hover:opacity-90 transition-opacity flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            >
+              {isPending ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="size-4"
+                  className="size-5 animate-spin"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
                 >
-                  <path d="m9 18 6-6-6-6" />
+                  <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                 </svg>
-              </>
-            )}
-          </button>
-          <Turnstile
-            siteKey={env.NEXT_PUBLIC_CLOUDFLARED_SITE_KEY}
-            retry="auto"
-            refreshExpired="auto"
-            sandbox={env.NEXT_PUBLIC_ENV === "dev"}
-            onError={() => {
-              setTurnstileStatus("error");
-              setError("Security check failed. Please try again.");
-            }}
-            onExpire={() => {
-              setTurnstileStatus("expired");
-              setError("Security check expired. Please verify again.");
-            }}
-            onLoad={() => {
-              setTurnstileStatus("required");
-              setError(null);
-            }}
-            onVerify={(token) => {
-              setTurnstileStatus("success");
-              setError(null);
-            }}
-          />
+              ) : (
+                <>
+                  Continue
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="size-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </>
+              )}
+            </button>
+          </div>
         </form>
 
         {/* Login Link */}
         <div className="text-center mt-10">
-          <p className="text-xs text-zinc-500 uppercase tracking-widest font-medium">
+          <p className="text-xs text-zinc-500 tracking-widest font-medium">
             Already have an account?{" "}
             <Link
               href="/login"

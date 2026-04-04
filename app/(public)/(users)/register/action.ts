@@ -18,8 +18,9 @@ export async function registerAction(
 ) {
   const parse = registerSchema
     .extend({
-      "cf-turnstile-response":
-        env.ENV === "prod" ? z.string().min(1) : z.string().default(""),
+      "cf-turnstile-response": z
+        .string()
+        .min(1, "Security verification required"),
     })
     .safeParse(Object.fromEntries(formData.entries()));
 
@@ -32,19 +33,24 @@ export async function registerAction(
   const token = parse.data["cf-turnstile-response"];
   const userIp = await getClientIP();
 
-  if (!userIp && env.ENV === "prod") {
-    return {
-      success: false,
-      error: "No request event found, please refresh the page and try again",
-    };
-  }
+  if (env.ENV === "production") {
+    if (!userIp) {
+      return {
+        success: false,
+        error: "No request event found, please refresh the page and try again",
+      };
+    }
 
-  const turnstileResponse = await validateTurnstile(token, userIp || "");
-  if (!turnstileResponse.success) {
-    return {
-      success: false,
-      error: "Turnstile captcha failed, please refresh the page and try again",
-    };
+    const turnstileResponse = await validateTurnstile(token, userIp);
+    console.dir(turnstileResponse);
+
+    if (!turnstileResponse.success) {
+      return {
+        success: false,
+        error:
+          "Turnstile captcha failed, please refresh the page and try again",
+      };
+    }
   }
 
   try {
@@ -85,7 +91,7 @@ export async function registerAction(
     });
 
     // Send verification email
-    const verificationLink = `${env.NEXT_PUBLIC_APP_URL}/verify?token=${verificationToken}`;
+    const verificationLink = `${env.NEXT_PUBLIC_APP_URL}/verify?token=${verificationToken}&email=${email}`;
 
     const { error: emailError } = await resend.emails.send({
       from: "Celestia <auth@celestia.anuj.app>",

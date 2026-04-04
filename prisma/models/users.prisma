@@ -4,10 +4,12 @@ model User {
   lastName     String
   phoneNumber  String    @unique
   email        String    @unique
+  verified     Boolean   @default(false)
   orders       Order[]
   address      Address[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+  sessions     Session[]
 
   @@map("users")
 }
