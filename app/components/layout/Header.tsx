@@ -8,7 +8,7 @@ import Image from "next/image";
 // Simplified Search Skeleton
 function SearchSkeleton() {
   return (
-    <div className="fixed z-[60] inset-0 md:inset-x-0 md:top-0 h-screen md:h-[40vh] bg-background border-b border-gray-200 dark:border-zinc-800 px-5 md:px-26 md:py-8 py-2 text-foreground">
+    <div className="fixed z-60 inset-0 md:inset-x-0 md:top-0 h-screen md:h-[40vh] bg-background border-b border-gray-200 dark:border-zinc-800 px-5 md:px-26 md:py-8 py-2 text-foreground">
       <div className="flex items-center justify-between gap-3 pb-3">
         <div className="w-full items-center flex bg-gray-50 dark:bg-zinc-900 py-4 px-2">
           <div className="w-full h-6 bg-gray-200 dark:bg-zinc-800 rounded animate-pulse"></div>
@@ -73,7 +73,7 @@ export default function Header() {
         <div className="py-2 min-h-11 flex items-center justify-between">
           {/* Mobile Logo */}
           <Link href="/" className="md:hidden">
-            <span className="text-lg font-bold tracking-tighter uppercase italic ml-[-4px]">
+            <span className="text-lg font-bold tracking-tighter uppercase italic -ml-1">
               CELESTIA
             </span>
           </Link>
@@ -151,7 +151,7 @@ export default function Header() {
                 />
               </svg>
               <span
-                className="absolute top-[-5px] right-[-10px] text-[10px] bg-gray-100 dark:bg-zinc-800 size-4 text-center rounded-full flex items-center justify-center font-semibold"
+                className="absolute -top-1.25 -right-2.5 text-[10px] bg-gray-100 dark:bg-zinc-800 size-4 text-center rounded-full flex items-center justify-center font-semibold"
                 aria-hidden="true"
               >
                 {cartCount}
@@ -196,7 +196,7 @@ export default function Header() {
         {isSearchOpen && (
           <>
             <div
-              className="fixed inset-0 bg-black bg-opacity-50 z-[55]"
+              className="fixed inset-0 bg-black bg-opacity-50 z-55"
               onClick={() => setIsSearchOpen(false)}
             />
             {/* For now just show skeleton as placeholder overlay */}
