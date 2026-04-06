@@ -91,7 +91,7 @@ export async function registerAction(
     });
 
     // Send verification email
-    const verificationLink = `${env.NEXT_PUBLIC_APP_URL}/verify?token=${verificationToken}&email=${email}`;
+    const verificationLink = `${env.NEXT_PUBLIC_APP_URL}/api/verify?token=${verificationToken}&email=${email}`;
 
     const { error: emailError } = await resend.emails.send({
       from: "Celestia <auth@celestia.anuj.app>",
