@@ -2,10 +2,11 @@
 import { prettifyError, z } from "zod/v4";
 import { env } from "@/app/libs/env";
 import { registerSchema } from "./types";
-import { getClientIP } from "./utlis";
+import { getClientIP } from "@/app/utils/utils";
 import { prisma } from "@/app/libs/prisma";
 import { v4 as uuidv4 } from "uuid";
 import { resend } from "@/app/libs/resend";
+import { validateTurnstile } from "@/app/utils/utils";
 
 type RegisterState = {
   success: boolean;
@@ -64,7 +65,8 @@ export async function registerAction(
     if (existingUser) {
       return {
         success: false,
-        error: "A user with this email or phone number already exists.",
+        error:
+          "A user with this email or phone number already exists. Please log in instead.",
       };
     }
 
@@ -127,30 +129,5 @@ export async function registerAction(
       success: false,
       error: "An unexpected error occurred. Please try again later.",
     };
-  }
-}
-
-async function validateTurnstile(token: string, remoteip: string) {
-  "use server";
-  const SECRET_KEY = env.CLOUDFLARED_SECRET_KEY;
-  const formData = new FormData();
-  formData.append("secret", SECRET_KEY);
-  formData.append("response", token);
-  formData.append("remoteip", remoteip);
-
-  try {
-    const response = await fetch(
-      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      {
-        method: "POST",
-        body: formData,
-      },
-    );
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error("Turnstile validation error:", error);
-    return { success: false, "error-codes": ["internal-error"] };
   }
 }
