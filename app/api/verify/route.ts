@@ -22,25 +22,34 @@ export async function GET(request: NextRequest) {
 
   try {
     const session = await prisma.$transaction(async (tx) => {
-      const user = await tx.verificationToken.findFirst({
+      const verificationToken = await tx.verificationToken.findFirst({
         where: { email: email as string, token: token as string },
       });
 
-      if (!user) {
+      if (!verificationToken) {
         throw new Error("Invalid verification link.");
       }
 
-      if (user.expiresAt < new Date()) {
+      if (verificationToken.expiresAt < new Date()) {
         throw new Error("Verification link has expired.");
       }
 
+      const user = await tx.user.findFirst({
+        where: { email: verificationToken.email },
+        select: { id: true },
+      });
+
+      if (!user) {
+        throw new Error("User not found.");
+      }
+
       await tx.user.update({
-        where: { id: user.id }, // Make sure user.id maps correctly based on your schema
+        where: { email: verificationToken.email },
         data: { verified: true },
       });
 
       await tx.verificationToken.delete({
-        where: { id: user.id },
+        where: { id: verificationToken.id },
       });
 
       const newSession = await tx.session.create({
@@ -57,21 +66,22 @@ export async function GET(request: NextRequest) {
       httpOnly: true,
       secure: env.ENV === "production",
       sameSite: "lax",
+      expires: new Date(Date.now() + 7 * 24 * 1000 * 60 * 60),
     });
 
     // Redirect to a success page or dashboard after setting the cookie
     return NextResponse.redirect(new URL("/", request.url));
   } catch (error) {
     console.error(error);
-    
+
     // Default error message
     let errorMessage = "Verification failed.";
-    
+
     // If it's a known error from our logic, use it
     if (error instanceof Error) {
       errorMessage = error.message;
     }
-    
+
     // Redirect to an error page with the specific message
     return NextResponse.redirect(
       new URL(

@@ -11,7 +11,7 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_ENV: z.string().min(1),
     NEXT_PUBLIC_CLOUDFLARED_SITE_KEY: z.string().min(1),
-    NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3000"),
+    NEXT_PUBLIC_APP_URL: z.url().default("http://localhost:3000"),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV,
