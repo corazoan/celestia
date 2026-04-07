@@ -59,7 +59,6 @@ export default function Header() {
   const user = use(userPromise);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const cartCount = 0; // Temporary
-  const username = null; // Temporary
 
   // Prevent scrolling when search is open
   useEffect(() => {
