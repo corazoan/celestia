@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
+import { getCurrentUser } from "./libs/auth";
+import UserProvider from "./context/user-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,20 +22,23 @@ export const metadata: Metadata = {
   description: "Your app description",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const userPromise = getCurrentUser();
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body>
-        <Header />
-        <main className="pt-15">{children}</main>
-        <Footer />
+        <UserProvider userPromise={userPromise}>
+          <Header />
+          <main className="pt-15">{children}</main>
+          <Footer />
+        </UserProvider>
       </body>
     </html>
   );

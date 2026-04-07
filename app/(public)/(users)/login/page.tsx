@@ -13,7 +13,7 @@ export default function LoginPage() {
     sendLoginLinkAction,
     initialState,
   );
-  
+
   const [, setTurnstileStatus] = useState<
     "success" | "error" | "expired" | "required"
   >("required");
@@ -57,8 +57,8 @@ export default function LoginPage() {
                   <path d="M20 6 9 17l-5-5" />
                 </svg>
                 <span>
-                  Magic link sent! Check your inbox. It&apos;s not a physical 
-                  letter delivered by an owl, but it&apos;s the next best thing. 
+                  Magic link sent! Check your inbox. It&apos;s not a physical
+                  letter delivered by an owl, but it&apos;s the next best thing.
                   Click the link in the email to sign in instantly.
                 </span>
               </div>
