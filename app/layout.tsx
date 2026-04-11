@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Footer from "./components/layout/Footer";
-import Header from "./components/layout/Header";
 import { getCurrentUser } from "./libs/auth";
 import UserProvider from "./context/user-provider";
 
@@ -35,9 +33,7 @@ export default async function RootLayout({
     >
       <body>
         <UserProvider userPromise={userPromise}>
-          <Header />
           <main className="pt-15">{children}</main>
-          <Footer />
         </UserProvider>
       </body>
     </html>

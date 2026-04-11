@@ -2,7 +2,8 @@
 import { useContext, use } from "react";
 import { UserContext } from "@/app/context/user-provider";
 import { redirect } from "next/navigation";
-export default function DashboardLayout({
+
+export default function PublicLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -10,7 +11,7 @@ export default function DashboardLayout({
   const userPromise = useContext(UserContext);
 
   if (!userPromise) {
-    throw new Error("useContext must be used within a UserProvider");
+    return null;
   }
 
   const user = use(userPromise);
@@ -19,5 +20,5 @@ export default function DashboardLayout({
     redirect("/account");
   }
 
-  return <main>{children}</main>;
+  return <>{children}</>;
 }
