@@ -1,6 +1,3 @@
-import { headers } from "next/headers";
-import { env } from "../libs/env";
-
 type Handler<T> = [T, null] | [null, Error];
 
 export const returnHandler = <T>(result: T): Handler<T> => {
