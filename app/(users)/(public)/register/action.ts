@@ -2,11 +2,10 @@
 import { prettifyError, z } from "zod/v4";
 import { env } from "@/app/libs/env";
 import { registerSchema } from "./types";
-import { getClientIP } from "@/app/utils/utils";
 import { prisma } from "@/app/libs/prisma";
 import { v4 as uuidv4 } from "uuid";
 import { resend } from "@/app/libs/resend";
-import { validateTurnstile } from "@/app/utils/utils";
+import { getClientIP, validateTurnstile } from "@/app/utils/server_utils";
 
 type RegisterState = {
   success: boolean;
