@@ -1,13 +1,18 @@
 "use client";
-
 import Link from "next/link";
 import { useState, useActionState } from "react";
 import { Turnstile } from "next-turnstile";
 import { env } from "@/app/libs/env";
+import AdminLoginAction from "./action";
+
+const initialState = {
+  error: "",
+  success: false,
+};
 
 export default function AdminLoginPage() {
   const [state, loginAction, pending] = useActionState(
-    mockAdminLoginAction,
+    AdminLoginAction,
     initialState,
   );
 

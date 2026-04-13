@@ -4,14 +4,10 @@ import z from "zod/v4";
 import { prisma } from "@/app/libs/prisma";
 import { loginSchema } from "./types";
 import { v4 as uuidv4 } from "uuid";
-import {
-  errorHandler,
-  getClientIP,
-  returnHandler,
-  validateTurnstile,
-} from "@/app/utils/utils";
+import { errorHandler, returnHandler } from "@/app/utils/utils";
 import { env } from "@/app/libs/env";
 import { resend } from "@/app/libs/resend";
+import { getClientIP, validateTurnstile } from "@/app/utils/server_utils";
 
 type LoginState = {
   success: boolean;
