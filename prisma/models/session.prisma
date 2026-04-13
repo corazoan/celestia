@@ -1,8 +1,20 @@
 model Session {
   id        String   @id @default(uuid())
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [id])
+  adminId   String?
+  admin     Admin?   @relation(fields: [adminId], references: [id])
   createdAt DateTime @default(now())
+
+
 
  @@map("sessions")
 }
+
+
+//Apply this check constraint to enforce that either userId or adminId is set, but not both
+// ADD CONSTRAINT chk_one_owner
+// CHECK (
+//   ("userId" IS NOT NULL AND "adminId" IS NULL) OR
+//   ("adminId" IS NOT NULL AND "userId" IS NULL)
+// );
