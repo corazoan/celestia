@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
 
     // We can safely set cookies in a Route Handler
     const cookieStore = await cookies();
-    cookieStore.set("session", session.id, {
+    cookieStore.set("sessionId", session.id, {
       path: "/",
       httpOnly: true,
       secure: env.ENV === "production",
