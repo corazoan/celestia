@@ -33,6 +33,7 @@ export default async function RootLayout({
     >
       <body>
         <UserProvider userPromise={userPromise}>
+          {/*this padding used for cancel the header structure. because navbar has fixed property on it*/}
           <main className="pt-15">{children}</main>
         </UserProvider>
       </body>
