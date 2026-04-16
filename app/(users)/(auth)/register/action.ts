@@ -42,7 +42,6 @@ export async function registerAction(
     }
 
     const turnstileResponse = await validateTurnstile(token, userIp);
-    console.dir(turnstileResponse);
 
     if (!turnstileResponse.success) {
       return {

@@ -11,7 +11,6 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const ownerPromise = useContext(UserContext);
-  console.log("ownerPromise", ownerPromise);
   if (!ownerPromise) {
     throw new Error("useContext must be used within a UserProvider");
   }

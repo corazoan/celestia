@@ -47,7 +47,6 @@ export async function sendLoginLinkAction(
     }
 
     const turnstileResponse = await validateTurnstile(token, userIp);
-    console.dir(turnstileResponse);
 
     if (!turnstileResponse.success) {
       return {

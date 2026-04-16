@@ -76,14 +76,11 @@ export default async function AdminLoginAction(
       success: false,
     };
   }
-  console.log("passwordHash", admin.passwordHash);
-  console.log("password", parse.data.password);
   const isPasswordValid = await compare(
     parse.data.password,
     admin.passwordHash,
   );
 
-  console.log("isPasswordValid", isPasswordValid);
   if (!isPasswordValid) {
     return {
       error: "Invalid password, please try again",
