@@ -2,7 +2,7 @@ export default function Header() {
   return (
     <header className="h-20 bg-background border-b border-zinc-200 dark:border-zinc-800 px-8 flex items-center justify-between sticky top-0 z-30">
       <h2 className="text-xl font-bold tracking-tighter uppercase italic">
-        Welcome to your
+        Welcome
       </h2>
 
       <div className="flex items-center gap-6">
