@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function ProductsPage() {
   const products = [
     {
@@ -70,7 +72,10 @@ export default function ProductsPage() {
               </svg>
               Filter
             </button>
-            <button className="px-5 py-2 bg-foreground text-background text-[10px] font-bold uppercase tracking-[0.15em] hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer">
+            <Link
+              href="/admin/products/add-product"
+              className="px-5 py-2 bg-foreground text-background text-[10px] font-bold uppercase tracking-[0.15em] hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="14"
@@ -83,7 +88,7 @@ export default function ProductsPage() {
                 <path d="M12 5v14M5 12h14" />
               </svg>
               Add Product
-            </button>
+            </Link>
           </div>
         </div>
 

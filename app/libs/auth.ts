@@ -9,6 +9,7 @@ export const getCurrentUser = cache(
     { role: "admin"; admin: Admin } | { role: "user"; user: User } | null
   > => {
     "use server";
+    console.log("get current user action is called");
     const cookieStore = await cookies();
     const session = cookieStore.get("sessionId");
     if (!session) return null;
