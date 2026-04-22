@@ -140,3 +140,53 @@ export async function getCategories() {
     return [];
   }
 }
+
+export async function deleteCategory(id: number) {
+  if (!id)
+    return {
+      success: false,
+      error: "Category ID is required.",
+    };
+
+  const owner = await getCurrentUser();
+  if (!owner)
+    return {
+      success: false,
+      error: "You don't have permission to perform this action.",
+    };
+
+  if (owner.role !== "admin")
+    return {
+      success: false,
+      error: "You don't have permission to perform this action.",
+    };
+
+  const [, resultError] = await prisma.category
+    .delete({
+      where: {
+        id: Number(id),
+      },
+    })
+    .then(returnHandler)
+    .catch(errorHandler);
+
+  if (resultError instanceof Prisma.PrismaClientKnownRequestError) {
+    const err = resultError as Prisma.PrismaClientKnownRequestError;
+
+    if (err.code === "P2025") {
+      return {
+        success: false,
+        error: "Category not found",
+      };
+    }
+
+    return {
+      success: false,
+      error: "An error occurred while deleting the category",
+    };
+  }
+
+  revalidatePath("/admin/products/categories");
+
+  return { success: true, error: "" };
+}
