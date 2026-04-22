@@ -33,7 +33,7 @@ const sidebarItems: SidebarItem[] = [
     ),
     subItems: [
       { label: "Product List", href: "/admin/products/list" },
-      { label: "Add Category", href: "/admin/products/add-category" },
+      { label: "Category", href: "/admin/products/category" },
       { label: "Add Product", href: "/admin/products/add-product" },
     ],
   },

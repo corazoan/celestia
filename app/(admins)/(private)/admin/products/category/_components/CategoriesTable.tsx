@@ -1,6 +1,6 @@
 "use server";
-import { Suspense } from "react";
 import { getCategories } from "../action";
+import EditCategoryModel from "./EditCategoryModel";
 
 export default async function CategoriesTable() {
   const categories = await getCategories();
@@ -40,25 +40,11 @@ export default async function CategoriesTable() {
               </td>
               <td className="px-6 py-4 text-right">
                 <div className="flex justify-end gap-2">
-                  <button
-                    className="p-2 text-zinc-400 hover:text-foreground transition-colors"
-                    title="Edit"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-                      <path d="m15 5 4 4" />
-                    </svg>
-                  </button>
+                  <EditCategoryModel
+                    name={cat.name}
+                    slug={cat.slug}
+                    id={cat.id}
+                  />
                   <button
                     className="p-2 text-zinc-400 hover:text-red-500 transition-colors"
                     title="Delete"
