@@ -1,33 +1,20 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useState, useActionState } from "react";
 import { deleteCategory } from "../action";
 
+const initialState = { success: false, error: "" };
 export default function DeleteCategoryModel({ id }: { id: number }) {
   const [open, setOpen] = useState(false);
-  const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
-
-  const handleDelete = () => {
-    setError(null);
-    startTransition(async () => {
-      const result = await deleteCategory(id);
-      if (result.success) {
-        setOpen(false);
-      } else {
-        setError(result.error);
-      }
-    });
-  };
-
+  const [state, action, pending] = useActionState(
+    () => deleteCategory(id),
+    initialState,
+  );
   return (
     <>
       <button
         className="p-2 text-zinc-400 hover:text-red-500 transition-colors"
         title="Delete"
-        onClick={() => {
-          setError(null);
-          setOpen(true);
-        }}
+        onClick={() => setOpen(true)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +34,6 @@ export default function DeleteCategoryModel({ id }: { id: number }) {
           <line x1="14" x2="14" y1="11" y2="17" />
         </svg>
       </button>
-
       {open && (
         <div className="fixed inset-0 z-60 flex items-center justify-center p-4">
           <div
@@ -87,9 +73,9 @@ export default function DeleteCategoryModel({ id }: { id: number }) {
             </div>
 
             <div className="p-8">
-              {error && (
+              {state.error && (
                 <div className="mb-6 p-4 text-xs font-bold uppercase tracking-widest bg-red-50 text-red-600 dark:bg-red-950/20">
-                  {error}
+                  {state.error}
                 </div>
               )}
 
@@ -104,13 +90,14 @@ export default function DeleteCategoryModel({ id }: { id: number }) {
             </div>
 
             <div className="p-6 pt-0 flex flex-col gap-3">
-              <button
-                onClick={handleDelete}
-                disabled={isPending}
-                className="w-full bg-red-500/10 text-red-500 py-4 text-xs font-bold uppercase tracking-widest hover:bg-red-500/20 transition-colors border border-red-500/20 disabled:opacity-50"
-              >
-                {isPending ? "Processing..." : "Permanently Delete All"}
-              </button>
+              <form action={action}>
+                <button
+                  disabled={pending}
+                  className="w-full bg-red-500/10 text-red-500 py-4 text-xs font-bold uppercase tracking-widest hover:bg-red-500/20 transition-colors border border-red-500/20 disabled:opacity-50"
+                >
+                  {pending ? "Processing..." : "Permanently Delete All"}
+                </button>
+              </form>
               <button
                 onClick={() => setOpen(false)}
                 className="w-full bg-zinc-100 dark:bg-zinc-900 text-zinc-500 py-4 text-xs font-bold uppercase tracking-widest hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"

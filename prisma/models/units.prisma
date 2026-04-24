@@ -1,5 +1,5 @@
 model Unit {
-  id       Int       @id
+  id       Int       @id @default(autoincrement())
   name     String    @unique
   abbr     String    @unique
   products Product[]
