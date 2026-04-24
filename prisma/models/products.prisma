@@ -11,9 +11,13 @@ model Product {
   orderItems     OrderItem[]
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
+  unitValue      Int              @map("unit_value")
+  unit           Unit             @relation(fields: [unitId], references: [id])
+  unitId         Int              @map("unit_id")
   ProductVariant ProductVariant[]
   category       Category         @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId     Int
+
   @@map("products")
 }
 
@@ -23,7 +27,7 @@ enum ProductType {
 }
 
 enum ProductStatus {
-  DRAFT @map("draft")
-  ACTIVE @map("active")
+  DRAFT    @map("draft")
+  ACTIVE   @map("active")
   INACTIVE @map("inactive")
 }
