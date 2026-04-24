@@ -14,6 +14,9 @@ model Product {
   ProductVariant ProductVariant[]
   category       Category         @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId     Int
+  unit           Unit             @relation(fields: [unitId], references: [id])
+  unitId         Int
+
   @@map("products")
 }
 
@@ -23,7 +26,7 @@ enum ProductType {
 }
 
 enum ProductStatus {
-  DRAFT @map("draft")
-  ACTIVE @map("active")
+  DRAFT    @map("draft")
+  ACTIVE   @map("active")
   INACTIVE @map("inactive")
 }

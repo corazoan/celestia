@@ -1,0 +1,6 @@
+model Unit {
+  id          Int       @id
+  name        String    @unique
+  abbrevation String    @unique
+  product     Product[]
+}
