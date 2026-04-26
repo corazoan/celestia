@@ -1,7 +1,7 @@
 model Product {
   id             Int              @id @default(autoincrement())
   featuredImage  String
-  productImages  String[]
+  productImages  Image[]
   name           String
   productType    ProductType      @default(SINGLE)
   stock          Int?
