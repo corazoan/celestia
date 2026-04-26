@@ -1,6 +1,8 @@
 model Unit {
-  id          Int       @id
-  name        String    @unique
-  abbrevation String    @unique
-  product     Product[]
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  abbr     String    @unique
+  products Product[]
+
+  @@map("units")
 }

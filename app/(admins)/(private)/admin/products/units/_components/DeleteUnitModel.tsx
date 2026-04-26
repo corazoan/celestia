@@ -1,20 +1,22 @@
 "use client";
-import { useState, useActionState } from "react";
-import { deleteCategory } from "../action";
+import { useActionState, useState } from "react";
+import { deleteUnit } from "../action";
 
-const initialState = { success: false, error: "" };
-export default function DeleteCategoryModel({ id }: { id: number }) {
+export default function DeleteUnitModel({ id }: { id: number }) {
   const [open, setOpen] = useState(false);
-  const [state, action, pending] = useActionState(
-    () => deleteCategory(id),
-    initialState,
-  );
+  const [state, action, pending] = useActionState(() => deleteUnit(id), {
+    success: false,
+    error: "",
+  });
+
   return (
     <>
       <button
         className="p-2 text-zinc-400 hover:text-red-500 transition-colors"
         title="Delete"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true);
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -34,6 +36,7 @@ export default function DeleteCategoryModel({ id }: { id: number }) {
           <line x1="14" x2="14" y1="11" y2="17" />
         </svg>
       </button>
+
       {open && (
         <div className="fixed inset-0 z-60 flex items-center justify-center p-4">
           <div
@@ -80,12 +83,12 @@ export default function DeleteCategoryModel({ id }: { id: number }) {
               )}
 
               <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest leading-relaxed">
-                Warning: You are about to delete this category. This action is
+                Warning: You are about to delete this unit. This action is
                 irreversible and will
                 <span className="text-foreground border-b border-red-500 mx-1">
-                  remove all products
+                  unassign
                 </span>
-                linked to this category.
+                it from all products.
               </p>
             </div>
 
@@ -95,7 +98,7 @@ export default function DeleteCategoryModel({ id }: { id: number }) {
                   disabled={pending}
                   className="w-full bg-red-500/10 text-red-500 py-4 text-xs font-bold uppercase tracking-widest hover:bg-red-500/20 transition-colors border border-red-500/20 disabled:opacity-50"
                 >
-                  {pending ? "Processing..." : "Permanently Delete All"}
+                  {pending ? "Processing..." : "Permanently Delete Unit"}
                 </button>
               </form>
               <button
