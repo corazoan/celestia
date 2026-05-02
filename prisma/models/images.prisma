@@ -1,7 +1,6 @@
 model Image {
   id        String         @id @default(cuid())
   url       String
-  altText   String         @map("alt_text")
   variant   ProductVariant @relation(fields: [variantId], references: [id])
   variantId Int
   createdAt DateTime       @default(now()) @map("created_at")
