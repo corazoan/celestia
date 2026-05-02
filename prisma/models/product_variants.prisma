@@ -1,11 +1,21 @@
 model ProductVariant {
-  id            Int     @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   stock         Int
+  featuredImage String
   variantImages Image[]
   regularPrice  Float
   sellPrice     Float
   productId     Int
-  product       Product @relation(fields: [productId], references: [id])
+  unitValue     Int           @map("unit_value")
+  status        ProductStatus @default(DRAFT)
+  product       Product       @relation(fields: [productId], references: [id])
+  orderItems    OrderItem[]
 
   @@map("product_variants")
+}
+
+enum ProductStatus {
+  DRAFT    @map("draft")
+  ACTIVE   @map("active")
+  INACTIVE @map("inactive")
 }

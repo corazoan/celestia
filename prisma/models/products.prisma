@@ -1,33 +1,13 @@
 model Product {
   id             Int              @id @default(autoincrement())
-  featuredImage  String
-  productImages  Image[]
   name           String
-  productType    ProductType      @default(SINGLE)
-  stock          Int?
-  regularPrice   Float?
-  sellPrice      Float?
-  status         ProductStatus    @default(DRAFT)
-  orderItems     OrderItem[]
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
-  unitValue      Int              @map("unit_value")
-  unit           Unit             @relation(fields: [unitId], references: [id])
+  unit           Unit             @relation(fields: [unitId], references: [id], onDelete: Cascade)
   unitId         Int              @map("unit_id")
   ProductVariant ProductVariant[]
   category       Category         @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId     Int
 
   @@map("products")
-}
-
-enum ProductType {
-  SINGLE
-  VARIANT
-}
-
-enum ProductStatus {
-  DRAFT    @map("draft")
-  ACTIVE   @map("active")
-  INACTIVE @map("inactive")
 }
