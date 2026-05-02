@@ -1,6 +1,6 @@
 model Product {
   id             Int              @id @default(autoincrement())
-  name           String
+  name           String           @unique
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   unit           Unit             @relation(fields: [unitId], references: [id], onDelete: Cascade)

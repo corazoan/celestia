@@ -1,29 +1,24 @@
 "use client";
-type Category = {
+type Unit = {
   id: number;
   name: string;
-  slug: string;
-  _count: { products: number };
+  abbr: string;
 };
 
-export default function CategoriesInput({
-  categories,
-}: {
-  categories: Category[];
-}) {
+export default function UnitsInput({ units }: { units: Unit[] }) {
   return (
     <div className="space-y-2">
       <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
-        Category
+        Unit
       </label>
       <div className="relative">
         <select
-          name="categoryId"
-          className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors appearance-none cursor-pointer pr-10 uppercase font-bold tracking-widest text-xs"
+          name="unitId"
+          className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3  focus:outline-none focus:border-foreground transition-colors appearance-none cursor-pointer pr-10 uppercase font-bold tracking-widest text-xs"
         >
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
+          {units.map((unit) => (
+            <option key={unit.id} value={unit.id}>
+              {unit.name} ({unit.abbr})
             </option>
           ))}
         </select>
