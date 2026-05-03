@@ -4,6 +4,7 @@ import ImageInput from "./ImageInput";
 import UnitsInput from "./UnitsInput";
 import { useActionState } from "react";
 import { addProductAction } from "../action";
+import Form from "next/form";
 
 const initialState = { error: "", success: false };
 type Categories = {
@@ -36,7 +37,7 @@ export function AddProductForm({
     initialState,
   );
   return (
-    <form className="space-y-8 pb-24" method="POST" action={action}>
+    <Form className="space-y-8 pb-24" formMethod="POST" action={action}>
       {(state.error || state.success) && (
         <div
           className={`p-4 text-xs font-bold uppercase tracking-widest ${
@@ -193,6 +194,6 @@ export function AddProductForm({
           {pending ? "Processing..." : "Publish Product"}
         </button>
       </div>
-    </form>
+    </Form>
   );
 }
