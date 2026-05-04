@@ -139,8 +139,7 @@ export default function ProductRow({
                               src={variant.featuredImage}
                               width="500"
                               height="500"
-                              alt="Face with sepia effect"
-                              sepia
+                              alt={`${product.name}`}
                             />
                           </div>
                         </td>

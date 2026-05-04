@@ -1,5 +1,3 @@
-"use client";
-
 import { Product } from "../type";
 import ProductRow from "./ProductRow";
 

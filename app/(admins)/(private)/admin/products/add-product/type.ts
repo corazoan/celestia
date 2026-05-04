@@ -1,3 +1,4 @@
+import { blob } from "node:stream/consumers";
 import z from "zod/v4";
 
 export type initialState = {
@@ -11,6 +12,8 @@ const fileSchema = z.custom(
     if (typeof file === "string") return false;
 
     const blobLike = file as { size?: number; type?: string; name?: string };
+
+    if (blobLike.size === 0) return true;
 
     return (
       typeof blobLike.size === "number" &&
@@ -33,10 +36,9 @@ export const productSchema = z.object({
   regularPrice: z.coerce.number(),
   sellPrice: z.coerce.number(),
   stock: z.coerce.number(),
-
   featuredImage: fileSchema,
-  galleryImage1: fileSchema.optional(),
-  galleryImage2: fileSchema.optional(),
-  galleryImage3: fileSchema.optional(),
-  galleryImage4: fileSchema.optional(),
+  galleryImage1: fileSchema,
+  galleryImage2: fileSchema,
+  galleryImage3: fileSchema,
+  galleryImage4: fileSchema,
 });

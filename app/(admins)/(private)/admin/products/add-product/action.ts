@@ -37,33 +37,38 @@ export async function addProductAction(
     };
   }
 
-  const filesToUpload: { key: string; blob: Blob }[] = [
-    { key: "featured-image", blob: parse.data["featuredImage"] as Blob },
-    { key: "gallery-image-1", blob: parse.data["galleryImage1"] as Blob },
-    { key: "gallery-image-2", blob: parse.data["galleryImage2"] as Blob },
-    { key: "gallery-image-3", blob: parse.data["galleryImage3"] as Blob },
-    { key: "gallery-image-4", blob: parse.data["galleryImage4"] as Blob },
-  ];
+  const filesToUpload: { key: string; blob: File }[] = [
+    { key: "featured-image", blob: parse.data["featuredImage"] as File },
+    { key: "gallery-image-1", blob: parse.data["galleryImage1"] as File },
+    { key: "gallery-image-2", blob: parse.data["galleryImage2"] as File },
+    { key: "gallery-image-3", blob: parse.data["galleryImage3"] as File },
+    { key: "gallery-image-4", blob: parse.data["galleryImage4"] as File },
+  ].filter((file) => file.blob.size > 0);
 
-  const results = await Promise.all([
-    ...filesToUpload.map(async (file) =>
-      uploadToCloudinary(Buffer.from(await file.blob.arrayBuffer()), {
+  const results = await Promise.all(
+    filesToUpload.map(async (file) =>
+      uploadToCloudinary(file.blob, {
         folder: "product-images",
       }),
     ),
-  ]);
+  );
 
+  // Check for errors
   for (const [, resultErr] of results) {
     if (resultErr) return { success: false, error: "Failed to upload images." };
   }
 
-  const [
-    featuredImage,
-    galleryImage1,
-    galleryImage2,
-    galleryImage3,
-    galleryImage4,
-  ] = results.map((result) => result[0].secure_url);
+  // Map results back to their original keys with public_id
+  const uploadedFiles = filesToUpload.map((file, index) => ({
+    key: file.key,
+    publicId: results[index][0].public_id,
+    secureUrl: results[index][0].secure_url,
+  }));
+
+  const featuredImage = uploadedFiles.find((f) => f.key === "featured-image");
+  const galleryImages = uploadedFiles.filter((f) =>
+    f.key.startsWith("gallery-image-"),
+  );
 
   const [, productErr] = await prisma.product
     .create({
@@ -78,15 +83,10 @@ export async function addProductAction(
             stock: product.stock,
             unitValue: product.unitValue,
             status: product.status,
-            featuredImage,
+            featuredImage: featuredImage?.publicId || "",
             variantImages: {
               createMany: {
-                data: [
-                  { url: galleryImage1 },
-                  { url: galleryImage2 },
-                  { url: galleryImage3 },
-                  { url: galleryImage4 },
-                ],
+                data: galleryImages.map((image) => ({ url: image.publicId })),
               },
             },
           },
@@ -107,6 +107,14 @@ export async function addProductAction(
     return {
       success: false,
       error: "An error occurred while creating the unit",
+    };
+  }
+
+  if (productErr) {
+    console.error(productErr);
+    return {
+      success: false,
+      error: "An error occurred while updating the product variant",
     };
   }
 
