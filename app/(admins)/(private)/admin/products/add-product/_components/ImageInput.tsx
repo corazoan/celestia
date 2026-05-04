@@ -1,15 +1,22 @@
 "use client";
 
+import { CldImage } from "next-cloudinary";
 import { useState, useRef } from "react";
 
 interface ImageInputProps {
   name: string;
   label?: string;
   className?: string;
+  initialImage?: string;
 }
 
-export default function ImageInput({ name, label, className }: ImageInputProps) {
-  const [preview, setPreview] = useState<string | null>(null);
+export default function ImageInput({
+  name,
+  label,
+  className,
+  initialImage,
+}: ImageInputProps) {
+  const [preview, setPreview] = useState<string | null>(initialImage || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,11 +46,7 @@ export default function ImageInput({ name, label, className }: ImageInputProps) 
         className="aspect-square bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex flex-col items-center justify-center cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors group relative overflow-hidden"
       >
         {preview ? (
-          <img
-            src={preview}
-            alt="Preview"
-            className="w-full h-full object-cover"
-          />
+          <CldImage src={preview} width="500" height="500" alt="Preview" />
         ) : (
           <>
             <svg
