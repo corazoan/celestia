@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Product } from "../type";
 import { CldImage } from "next-cloudinary";
+import EditVariantModel from "./EditVariantModel";
+import DeleteVariantModel from "./DeleteVariantModel";
 
 export default function ProductRow({
   product,
@@ -174,9 +176,13 @@ export default function ProductRow({
                           </span>
                         </td>
                         <td className="p-3 text-right">
-                          <button className="text-[9px] font-bold uppercase tracking-widest text-zinc-400 hover:text-foreground transition-colors underline underline-offset-4 cursor-pointer">
-                            Edit
-                          </button>
+                          <div className="flex justify-end items-center">
+                            <EditVariantModel
+                              variant={variant}
+                              unitAbbr={product.unit.abbr}
+                            />
+                            <DeleteVariantModel id={variant.id} />
+                          </div>
                         </td>
                       </tr>
                     ))}
