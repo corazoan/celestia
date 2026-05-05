@@ -1,17 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { Product } from "../type";
+import { CategoryType, ProductWithRelations, UnitType } from "../type";
 import { CldImage } from "next-cloudinary";
 import EditVariantModel from "./EditVariantModel";
 import DeleteVariantModel from "./DeleteVariantModel";
+import AddVariantModel from "./AddVariantModel";
+import EditProductModel from "./EditProductModel";
+import DeleteProductModel from "./DeleteProductModel";
 
 export default function ProductRow({
   product,
   index,
+  categories,
+  units,
 }: {
-  product: Product;
+  product: ProductWithRelations;
   index: number;
+  categories: CategoryType[];
+  units: UnitType[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const totalStock = product.ProductVariant.reduce(
@@ -64,7 +71,21 @@ export default function ProductRow({
           </div>
         </td>
         <td className="p-4 text-[11px] text-zinc-500 uppercase tracking-widest font-medium text-center">
-          {product.ProductVariant.length} Variants
+          <div className="flex items-center justify-center gap-2">
+            {product.ProductVariant.length} Variants
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="10"
+              height="10"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+            >
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </div>
         </td>
         <td className="p-4 text-[11px] font-bold text-center">{priceRange}</td>
         <td className="p-4 text-center">
@@ -79,31 +100,27 @@ export default function ProductRow({
           </span>
         </td>
         <td className="p-4 text-right">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 hover:text-foreground transition-colors underline underline-offset-4 cursor-pointer flex items-center gap-1 ml-auto"
-          >
-            {isOpen ? "Hide" : "Show"} Variants
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
-            >
-              <path d="m6 9 6 6 6-6" />
-            </svg>
-          </button>
+          <div className="flex justify-end items-center gap-2">
+            <AddVariantModel
+              productId={product.id}
+              unitAbbr={product.unit.abbr}
+            />
+            <div className="flex items-center border-l border-zinc-100 dark:border-zinc-800 ml-2 pl-2">
+              <EditProductModel
+                product={product}
+                categories={categories}
+                units={units}
+              />
+              <DeleteProductModel id={product.id} />
+            </div>
+          </div>
         </td>
       </tr>
       {isOpen && (
         <tr className="bg-zinc-50/50 dark:bg-zinc-900/10">
           <td colSpan={6} className="p-0">
             <div className="p-4 pb-8">
-              <div className="border border-zinc-200 dark:border-zinc-800 bg-background overflow-hidden">
+              <div className="border border-zinc-200 dark:border-zinc-800 bg-background overflow-hidden shadow-sm">
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="bg-zinc-50 dark:bg-zinc-900/50 border-b border-zinc-100 dark:border-zinc-900">

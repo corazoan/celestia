@@ -106,6 +106,97 @@ export type editProductActionState = {
   error: string;
   success: boolean;
 };
+
+export async function addVariantAction(
+  prevState: editProductActionState,
+  formData: FormData,
+) {
+  const parse = addProductVariantSchema.safeParse(
+    Object.fromEntries(formData.entries()),
+  );
+
+  if (!parse.success) {
+    return {
+      success: false,
+      error: prettifyError(parse.error),
+    };
+  }
+
+  const data = parse.data;
+
+  const owner = await getCurrentUser();
+  if (!owner || owner.role !== "admin") {
+    return {
+      success: false,
+      error: "You don't have permission to perform this action.",
+    };
+  }
+
+  const filesToUpload: { key: string; blob: File }[] = [
+    { key: "featured-image", blob: parse.data["featuredImage"] as File },
+    { key: "gallery-image-1", blob: parse.data["galleryImage1"] as File },
+    { key: "gallery-image-2", blob: parse.data["galleryImage2"] as File },
+    { key: "gallery-image-3", blob: parse.data["galleryImage3"] as File },
+    { key: "gallery-image-4", blob: parse.data["galleryImage4"] as File },
+  ].filter((file) => file.blob.size > 0);
+
+  const results = await Promise.all(
+    filesToUpload.map(async (file) =>
+      uploadToCloudinary(file.blob, {
+        folder: "product-images",
+      }),
+    ),
+  );
+
+  for (const [, resultErr] of results) {
+    if (resultErr) return { success: false, error: "Failed to upload images." };
+  }
+
+  const uploadedFiles = filesToUpload.map((file, index) => ({
+    key: file.key,
+    publicId: results[index][0].public_id,
+    secureUrl: results[index][0].secure_url,
+  }));
+
+  const featuredImage = uploadedFiles.find((f) => f.key === "featured-image");
+  const galleryImages = uploadedFiles.filter((f) =>
+    f.key.startsWith("gallery-image-"),
+  );
+
+  const [, insertErr] = await prisma.productVariant
+    .create({
+      data: {
+        productId: data.productId,
+        regularPrice: data.regularPrice,
+        sellPrice: data.sellPrice,
+        stock: data.stock,
+        unitValue: data.unitValue,
+        status: data.status,
+        featuredImage: featuredImage?.publicId || "",
+        variantImages: {
+          createMany: {
+            data: galleryImages.map((galleryImage) => ({
+              url: galleryImage.publicId,
+            })),
+          },
+        },
+      },
+    })
+    .then(returnHandler)
+    .catch(errorHandler);
+
+  if (insertErr) {
+    console.error(insertErr);
+    return {
+      success: false,
+      error: "An error occurred while adding the product variant",
+    };
+  }
+
+  revalidatePath("/admin/products/list");
+  return { success: true, error: "" };
+}
+
 export async function updateProductVariant(
   initialState: editProductActionState,
   formdata: FormData,
