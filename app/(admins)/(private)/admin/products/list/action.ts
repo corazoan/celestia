@@ -1,14 +1,11 @@
 "use server";
-import crypto from "crypto";
 import { prisma } from "@/app/libs/prisma";
 import { getCurrentUser } from "@/app/libs/auth";
 import { revalidatePath } from "next/cache";
 import { errorHandler, returnHandler } from "@/app/utils/utils";
 import { Prisma } from "@/generated/prisma/client";
-import { productSchema } from "../add-product/type";
 import { prettifyError } from "zod/v4";
 import { productVariantSchema } from "./type";
-import { env } from "@/app/libs/env";
 import { uploadToCloudinary } from "@/app/libs/cloudinary";
 export async function getProducts() {
   const products = await prisma.product.findMany({
@@ -116,30 +113,62 @@ export async function updateProductVariant(
   const parse = productVariantSchema.safeParse(
     Object.fromEntries(formdata.entries()),
   );
-
   if (!parse.success) {
     return {
       success: false,
       error: prettifyError(parse.error),
     };
   }
-
   const owner = await getCurrentUser();
   if (!owner || owner.role !== "admin")
     return {
       success: false,
       error: "You don't have permission to perform this action.",
     };
-
   const data = parse.data;
 
-  const filesToUpload: { key: string; blob: File }[] = [
-    { key: "featured-image", blob: parse.data["featuredImage"] as File },
-    { key: "gallery-image-1", blob: parse.data["galleryImage1"] as File },
-    { key: "gallery-image-2", blob: parse.data["galleryImage2"] as File },
-    { key: "gallery-image-3", blob: parse.data["galleryImage3"] as File },
-    { key: "gallery-image-4", blob: parse.data["galleryImage4"] as File },
-  ].filter(({ blob }) => blob.size > 0);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const updateData: any = {
+    regularPrice: data.regularPrice,
+    sellPrice: data.sellPrice,
+    unitValue: data.unitValue,
+    status: data.status,
+    stock: data.stock,
+  };
+
+  const file = [
+    {
+      slot: 1,
+      init: data.initFeaturedImage,
+      key: "featured-image",
+      blob: parse.data["featuredImage"] as File,
+    },
+    {
+      slot: 2,
+      init: data.initGalleryImage1,
+      key: "gallery-image-1",
+      blob: parse.data["galleryImage1"] as File,
+    },
+    {
+      slot: 3,
+      init: data.initGalleryImage2,
+      key: "gallery-image-2",
+      blob: parse.data["galleryImage2"] as File,
+    },
+    {
+      slot: 4,
+      init: data.initGalleryImage3,
+      key: "gallery-image-3",
+      blob: parse.data["galleryImage3"] as File,
+    },
+    {
+      slot: 5,
+      init: data.initGalleryImage4,
+      key: "gallery-image-4",
+      blob: parse.data["galleryImage4"] as File,
+    },
+  ];
+  const filesToUpload = file.filter(({ blob }) => blob.size > 0);
 
   const results = await Promise.all(
     filesToUpload.map(async (file) =>
@@ -149,8 +178,14 @@ export async function updateProductVariant(
     ),
   );
 
+  for (const [, resultErr] of results) {
+    if (resultErr) return { success: false, error: "Failed to upload images." };
+  }
+  //in dono ka index same hai fileToUpload and Results
   const uploadedFiles = filesToUpload.map((file, index) => {
     return {
+      slot: file.slot,
+      init: file.init,
       key: file.key,
       publicId: results[index][0].public_id,
     };
@@ -159,9 +194,45 @@ export async function updateProductVariant(
   const featuredImage = uploadedFiles.find(
     ({ key }) => key === "featured-image",
   );
-  const galleryImages = uploadedFiles.filter((f) =>
-    f.key.startsWith("gallery-image-"),
-  );
+
+  //if new featured image get uploaded then update the url
+  if (featuredImage) {
+    updateData.featuredImage = featuredImage.publicId;
+  }
+
+  const galleryImage1 =
+    file[1].blob.size > 0
+      ? uploadedFiles.filter((f) => f.key === "gallery-image-1")[0].publicId
+      : null;
+  const galleryImage2 =
+    file[2].blob.size > 0
+      ? uploadedFiles.filter((f) => f.key === "gallery-image-2")[0].publicId
+      : null;
+  const galleryImage3 =
+    file[3].blob.size > 0
+      ? uploadedFiles.filter((f) => f.key === "gallery-image-3")[0].publicId
+      : null;
+  const galleryImage4 =
+    file[4].blob.size > 0
+      ? uploadedFiles.filter((f) => f.key === "gallery-image-4")[0].publicId
+      : null;
+  const finalGalleryImages = [
+    galleryImage1,
+    galleryImage2,
+    galleryImage3,
+    galleryImage4,
+  ].filter((image) => image);
+
+  if (finalGalleryImages.length > 0) {
+    updateData.variantImages = {
+      deleteMany: {},
+      create: finalGalleryImages.map((image) => {
+        if (image) {
+          return { url: image };
+        }
+      }),
+    };
+  }
 
   const [, resultErr] = await prisma.productVariant
     .update({
@@ -169,20 +240,7 @@ export async function updateProductVariant(
         id: data.variantId,
       },
       data: {
-        regularPrice: data.regularPrice,
-        sellPrice: data.sellPrice,
-        unitValue: data.unitValue,
-        status: data.status,
-        stock: data.stock,
-        ...(featuredImage?.publicId && {
-          featuredImage: featuredImage.publicId,
-        }),
-        variantImages: {
-          deleteMany: {
-            variantId: data.variantId,
-          },
-          create: galleryImages.map((image) => ({ url: image.publicId })),
-        },
+        ...updateData,
       },
     })
     .then(returnHandler)
