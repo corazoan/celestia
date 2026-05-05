@@ -5,9 +5,11 @@ import { revalidatePath } from "next/cache";
 import { errorHandler, returnHandler } from "@/app/utils/utils";
 import { Prisma } from "@/generated/prisma/client";
 import { prettifyError } from "zod/v4";
-import { productVariantSchema } from "./type";
+import { addProductVariantSchema, productVariantSchema } from "./type";
 import { uploadToCloudinary } from "@/app/libs/cloudinary";
-export async function getProducts() {
+import { ProductWithRelations } from "./type";
+
+export async function getProducts(): Promise<ProductWithRelations[]> {
   const products = await prisma.product.findMany({
     take: 10,
     orderBy: {
@@ -16,6 +18,8 @@ export async function getProducts() {
     select: {
       id: true,
       name: true,
+      categoryId: true,
+      unitId: true,
       category: {
         select: {
           name: true,

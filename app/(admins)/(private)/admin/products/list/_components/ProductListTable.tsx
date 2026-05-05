@@ -1,17 +1,22 @@
-import { Product } from "../type";
+// import { YourComponentProps } from "../type";
+import { CategoryType, ProductWithRelations, UnitType } from "../type";
 import ProductRow from "./ProductRow";
 
 export default function ProductListTable({
   products,
+  categories,
+  units,
 }: {
-  products: Product[];
+  products: ProductWithRelations[];
+  categories: CategoryType[];
+  units: UnitType[];
 }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="bg-zinc-50 dark:bg-zinc-900/50 border-b border-zinc-100 dark:border-zinc-900">
-            <th className="p-4 w-12 text-[10px] uppercase font-bold text-zinc-400 tracking-widest">
+            <th className="p-4 w-12 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
               #
             </th>
             <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest">
@@ -33,7 +38,13 @@ export default function ProductListTable({
         </thead>
         <tbody className="divide-y divide-zinc-100 dark:divide-zinc-900">
           {products.map((product, index) => (
-            <ProductRow key={product.name} index={index} product={product} />
+            <ProductRow
+              key={product.name}
+              index={index}
+              product={product}
+              categories={categories}
+              units={units}
+            />
           ))}
         </tbody>
       </table>

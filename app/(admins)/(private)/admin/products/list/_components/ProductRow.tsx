@@ -39,13 +39,16 @@ export default function ProductRow({
 
   return (
     <>
-      <tr className="hover:bg-zinc-50 dark:hover:bg-zinc-900/30 transition-colors group border-b border-zinc-100 dark:border-zinc-900">
-        <td className="p-4 text-[11px] font-medium text-zinc-400">
+      <tr
+        onClick={() => setIsOpen(!isOpen)}
+        className="hover:bg-zinc-50 dark:hover:bg-zinc-900/30 transition-colors group border-b border-zinc-100 dark:border-zinc-900 cursor-pointer"
+      >
+        <td className="p-4 text-[11px] font-medium text-zinc-400 text-center">
           {index + 1}
         </td>
         <td className="p-4">
           <div className="flex items-center gap-3">
-            <div className="size-10 bg-zinc-100 dark:bg-zinc-900 rounded-none border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+            <div className="size-10 bg-zinc-100 dark:bg-zinc-900 rounded-none border border-zinc-200 dark:border-zinc-800 overflow-hidden shrink-0">
               {product.ProductVariant[0]?.featuredImage ? (
                 <CldImage
                   src={product.ProductVariant[0].featuredImage}
