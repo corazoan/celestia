@@ -8,7 +8,7 @@ model ProductVariant {
   productId     Int
   unitValue     Int           @map("unit_value")
   status        ProductStatus @default(DRAFT)
-  product       Product       @relation(fields: [productId], references: [id])
+  product       Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
   orderItems    OrderItem[]
 
   @@map("product_variants")
