@@ -200,6 +200,36 @@ export async function addVariantAction(
   revalidatePath("/admin/products/list");
   return { success: true, error: "" };
 }
+export async function deleteProduct(productId: number) {
+  const owner = await getCurrentUser();
+  if (!owner)
+    return {
+      success: false,
+      error: "You don't have permission to perform this action.",
+    };
+
+  if (owner.role !== "admin")
+    return {
+      success: false,
+      error: "You don't have permission to perform this action.",
+    };
+
+  const [, resultErr] = await prisma.product
+    .delete({
+      where: {
+        id: productId,
+      },
+    })
+    .then(returnHandler)
+    .catch(errorHandler);
+
+  if (resultErr) {
+    console.error(resultErr);
+    return {
+      success: false,
+      error: "An error occurred while deleting the product",
+    };
+  }
 
 export async function updateProductVariant(
   initialState: editProductActionState,

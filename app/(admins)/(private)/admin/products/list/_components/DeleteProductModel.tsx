@@ -1,14 +1,14 @@
 "use client";
 import { useState, useActionState } from "react";
-import { deleteProductVariant } from "../action";
+import { deleteProduct } from "../action";
 
 const initialState = { success: false, error: "" };
 
-export default function DeleteVariantModel({ id }: { id: number }) {
+export default function DeleteProductModel({ id }: { id: number }) {
   const [open, setOpen] = useState(false);
 
   const [state, action, pending] = useActionState(
-    () => deleteProductVariant(id),
+    () => deleteProduct(id),
     initialState,
   );
 
@@ -16,13 +16,16 @@ export default function DeleteVariantModel({ id }: { id: number }) {
     <>
       <button
         className="p-2 text-zinc-400 hover:text-red-500 transition-colors"
-        title="Delete Variant"
-        onClick={() => setOpen(true)}
+        title="Delete Product"
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(true);
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
+          width="16"
+          height="16"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -39,13 +42,13 @@ export default function DeleteVariantModel({ id }: { id: number }) {
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div
             className="absolute inset-0 bg-zinc-950/60 backdrop-blur-sm"
             onClick={() => setOpen(false)}
           />
 
-          <div className="relative bg-background border border-zinc-200 dark:border-zinc-800 shadow-2xl w-full max-w-md animate-in fade-in zoom-in duration-200">
+          <div className="relative bg-background border border-zinc-200 dark:border-zinc-800 shadow-2xl w-full max-w-md animate-in fade-in zoom-in duration-200 text-left">
             <div className="p-6 border-b border-zinc-100 dark:border-zinc-900 relative">
               <div className="text-center">
                 <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest">
@@ -84,12 +87,12 @@ export default function DeleteVariantModel({ id }: { id: number }) {
               )}
 
               <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest leading-relaxed">
-                Warning: You are about to delete this product variant. This
-                action is irreversible and will
+                Warning: You are about to delete this product. This action is
+                irreversible and will
                 <span className="text-foreground border-b border-red-500 mx-1">
-                  remove this specific variant
+                  remove the entire product
                 </span>
-                from the product.
+                including all its associated variants from your inventory.
               </p>
             </div>
 
@@ -99,7 +102,7 @@ export default function DeleteVariantModel({ id }: { id: number }) {
                   disabled={pending}
                   className="w-full bg-red-500/10 text-red-500 py-4 text-xs font-bold uppercase tracking-widest hover:bg-red-500/20 transition-colors border border-red-500/20 disabled:opacity-50"
                 >
-                  {pending ? "Processing..." : "Permanently Delete Variant"}
+                  {pending ? "Processing..." : "Permanently Delete Product"}
                 </button>
               </form>
               <button
