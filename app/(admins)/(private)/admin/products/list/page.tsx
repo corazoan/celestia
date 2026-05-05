@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { getProducts } from "./action";
 import ProductListTable from "./_components/ProductListTable";
+import { getCategories } from "../category/action";
+import { getUnits } from "../units/action";
 
 export default async function ProductsPage() {
   const products = await getProducts();
+  const categories = await getCategories();
+  const units = await getUnits();
 
   return (
     <div className="p-8 flex-1 overflow-auto">
@@ -54,8 +58,11 @@ export default async function ProductsPage() {
         </div>
 
         {/* Product List Table */}
-        <ProductListTable products={products} />
-
+        <ProductListTable
+          products={products}
+          categories={categories}
+          units={units}
+        />
         {/* Pagination */}
         <div className="p-6 border-t border-zinc-100 dark:border-zinc-900 flex items-center justify-between">
           <button

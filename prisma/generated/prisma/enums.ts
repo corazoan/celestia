@@ -9,14 +9,6 @@
 * 🟢 You can import this file directly.
 */
 
-export const ProductType = {
-  SINGLE: 'SINGLE',
-  VARIANT: 'VARIANT'
-} as const
-
-export type ProductType = (typeof ProductType)[keyof typeof ProductType]
-
-
 export const ProductStatus = {
   DRAFT: 'DRAFT',
   ACTIVE: 'ACTIVE',

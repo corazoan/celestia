@@ -1391,8 +1391,6 @@ export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typ
 export const ImageScalarFieldEnum = {
   id: 'id',
   url: 'url',
-  altText: 'altText',
-  productId: 'productId',
   variantId: 'variantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1425,9 +1423,12 @@ export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof Or
 export const ProductVariantScalarFieldEnum = {
   id: 'id',
   stock: 'stock',
+  featuredImage: 'featuredImage',
   regularPrice: 'regularPrice',
   sellPrice: 'sellPrice',
-  productId: 'productId'
+  productId: 'productId',
+  unitValue: 'unitValue',
+  status: 'status'
 } as const
 
 export type ProductVariantScalarFieldEnum = (typeof ProductVariantScalarFieldEnum)[keyof typeof ProductVariantScalarFieldEnum]
@@ -1435,16 +1436,9 @@ export type ProductVariantScalarFieldEnum = (typeof ProductVariantScalarFieldEnu
 
 export const ProductScalarFieldEnum = {
   id: 'id',
-  featuredImage: 'featuredImage',
   name: 'name',
-  productType: 'productType',
-  stock: 'stock',
-  regularPrice: 'regularPrice',
-  sellPrice: 'sellPrice',
-  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  unitValue: 'unitValue',
   unitId: 'unitId',
   categoryId: 'categoryId'
 } as const
@@ -1586,20 +1580,6 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
- * Reference to a field of type 'ProductType'
- */
-export type EnumProductTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductType'>
-    
-
-
-/**
- * Reference to a field of type 'ProductType[]'
- */
-export type ListEnumProductTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductType[]'>
     
 
 

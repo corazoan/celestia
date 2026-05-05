@@ -65,7 +65,7 @@ export default function EditVariantModel({
           />
           <div className="relative bg-background border border-zinc-200 dark:border-zinc-800 shadow-2xl w-full max-w-2xl flex flex-col max-h-[90vh] animate-in fade-in zoom-in duration-200">
             {/* Fixed Header */}
-            <div className="p-6 border-b border-zinc-100 dark:border-zinc-900 flex justify-between items-center flex-shrink-0">
+            <div className="p-6 border-b border-zinc-100 dark:border-zinc-900 flex justify-between items-center shrink-0">
               <div>
                 <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
                   Product Variant
@@ -294,7 +294,7 @@ export default function EditVariantModel({
               </div>
 
               {/* Fixed Footer */}
-              <div className="p-6 border-t border-zinc-100 dark:border-zinc-900 flex-shrink-0 bg-background">
+              <div className="p-6 border-t border-zinc-100 dark:border-zinc-900 shrink-0 bg-background">
                 <button
                   type="submit"
                   disabled={pending}

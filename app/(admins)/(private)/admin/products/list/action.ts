@@ -203,19 +203,19 @@ export async function updateProductVariant(
   const galleryImage1 =
     file[1].blob.size > 0
       ? uploadedFiles.filter((f) => f.key === "gallery-image-1")[0].publicId
-      : null;
+      : (file[1].init ?? null);
   const galleryImage2 =
     file[2].blob.size > 0
       ? uploadedFiles.filter((f) => f.key === "gallery-image-2")[0].publicId
-      : null;
+      : (file[2].init ?? null);
   const galleryImage3 =
     file[3].blob.size > 0
       ? uploadedFiles.filter((f) => f.key === "gallery-image-3")[0].publicId
-      : null;
+      : (file[3].init ?? null);
   const galleryImage4 =
     file[4].blob.size > 0
       ? uploadedFiles.filter((f) => f.key === "gallery-image-4")[0].publicId
-      : null;
+      : (file[4].init ?? null);
   const finalGalleryImages = [
     galleryImage1,
     galleryImage2,

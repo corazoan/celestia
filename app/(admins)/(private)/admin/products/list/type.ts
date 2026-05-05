@@ -1,5 +1,5 @@
 import { z } from "zod/v4";
-
+import { Prisma } from "@/prisma/generated/prisma/client";
 export interface Variant {
   id: number;
   stock: number;
@@ -15,13 +15,69 @@ export interface Variant {
   }[];
 }
 
-export interface Product {
-  id: number;
-  name: string;
-  category: { name: string };
-  unit: { name: string; abbr: string };
-  ProductVariant: Variant[];
-}
+export type ProductWithRelations = Prisma.ProductGetPayload<{
+  select: {
+    id: true;
+    name: true;
+    categoryId: true;
+    unitId: true;
+    category: {
+      select: {
+        name: true;
+      };
+    };
+    unit: {
+      select: {
+        name: true;
+        abbr: true;
+      };
+    };
+    ProductVariant: {
+      select: {
+        id: true;
+        regularPrice: true;
+        sellPrice: true;
+        stock: true;
+        status: true;
+        unitValue: true;
+        featuredImage: true;
+        variantImages: {
+          select: {
+            id: true;
+            url: true;
+            variantId: true;
+          };
+        };
+      };
+    };
+  };
+}>;
+
+export type CategoryType = Prisma.CategoryGetPayload<{
+  select: {
+    _count: {
+      select: {
+        products: true;
+      };
+    };
+    name: true;
+    slug: true;
+    id: true;
+  };
+}>;
+
+export type UnitType = Prisma.UnitGetPayload<{
+  select: {
+    _count: {
+      select: {
+        products: true;
+      };
+    };
+    name: true;
+    abbr: true;
+    id: true;
+  };
+}>;
 
 const fileSchema = z.custom(
   (file) => {
@@ -53,6 +109,20 @@ export const productVariantSchema = z.object({
   initGalleryImage2: z.string().optional(),
   initGalleryImage3: z.string().optional(),
   initGalleryImage4: z.string().optional(),
+  featuredImage: fileSchema,
+  galleryImage1: fileSchema,
+  galleryImage2: fileSchema,
+  galleryImage3: fileSchema,
+  galleryImage4: fileSchema,
+});
+
+export const addProductVariantSchema = z.object({
+  productId: z.coerce.number(),
+  stock: z.coerce.number(),
+  regularPrice: z.coerce.number(),
+  sellPrice: z.coerce.number(),
+  unitValue: z.coerce.number(),
+  status: z.enum(["DRAFT", "ACTIVE", "INACTIVE"]),
   featuredImage: fileSchema,
   galleryImage1: fileSchema,
   galleryImage2: fileSchema,
