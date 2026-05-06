@@ -15,6 +15,13 @@ export interface Variant {
   }[];
 }
 
+export const productEditSchema = z.object({
+  id: z.coerce.number(),
+  name: z.string(),
+  categoryId: z.coerce.number(),
+  unitId: z.coerce.number(),
+});
+
 export type ProductWithRelations = Prisma.ProductGetPayload<{
   select: {
     id: true;

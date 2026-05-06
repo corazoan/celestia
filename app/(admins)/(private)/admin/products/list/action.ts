@@ -5,7 +5,11 @@ import { revalidatePath } from "next/cache";
 import { errorHandler, returnHandler } from "@/app/utils/utils";
 import { Prisma } from "@/generated/prisma/client";
 import { prettifyError } from "zod/v4";
-import { addProductVariantSchema, productVariantSchema } from "./type";
+import {
+  addProductVariantSchema,
+  productEditSchema,
+  productVariantSchema,
+} from "./type";
 import { uploadToCloudinary } from "@/app/libs/cloudinary";
 import { ProductWithRelations } from "./type";
 
@@ -103,6 +107,50 @@ export async function deleteProductVariant(productVariantId: number) {
 
   revalidatePath("/admin/products/list");
 
+  return { success: true, error: "" };
+}
+
+export async function updateProduct(
+  prevState: editProductActionState,
+  data: FormData,
+) {
+  const parse = productEditSchema.safeParse(Object.fromEntries(data.entries()));
+  if (!parse.success) {
+    return {
+      success: false,
+      error: prettifyError(parse.error),
+    };
+  }
+  const { id, name, categoryId, unitId } = parse.data;
+
+  const owner = await getCurrentUser();
+  if (!owner || owner.role !== "admin")
+    return {
+      success: false,
+      error: "You don't have permission to perform this action.",
+    };
+
+  const [, resultErr] = await prisma.product
+    .update({
+      where: { id },
+      data: {
+        name,
+        categoryId,
+        unitId,
+      },
+    })
+    .then(returnHandler)
+    .catch(errorHandler);
+
+  if (resultErr) {
+    console.error(resultErr);
+    return {
+      success: false,
+      error: "An error occurred while updating the product",
+    };
+  }
+
+  revalidatePath("/admin/products/list");
   return { success: true, error: "" };
 }
 
@@ -231,6 +279,9 @@ export async function deleteProduct(productId: number) {
     };
   }
 
+  revalidatePath("/admin/products/list");
+  return { success: true, error: "" };
+}
 export async function updateProductVariant(
   initialState: editProductActionState,
   formdata: FormData,
