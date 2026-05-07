@@ -3,12 +3,13 @@
 import { useState } from "react";
 import EditCategoryModel from "./EditCategoryModel";
 import DeleteCategoryModel from "./DeleteCategoryModel";
+import { CategoryType } from "../type";
 
 export default function CategoryRow({
   category,
   index,
 }: {
-  category: any;
+  category: CategoryType;
   index: number;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -93,7 +94,7 @@ export default function CategoryRow({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-zinc-100 dark:divide-zinc-900">
-                    {category.children.map((child: any) => (
+                    {category.children.map((child) => (
                       <tr
                         key={child.id}
                         className="hover:bg-zinc-50/50 dark:hover:bg-zinc-900/20 transition-colors"
