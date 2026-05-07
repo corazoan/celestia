@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/app/libs/prisma";
-import { Prisma } from "@/generated/prisma/client";
+import { Prisma } from "@/prisma/generated/prisma/client";
 import { revalidatePath } from "next/cache";
 import {
   addCategorySchema,

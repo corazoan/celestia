@@ -3,7 +3,7 @@ import { prisma } from "@/app/libs/prisma";
 import { getCurrentUser } from "@/app/libs/auth";
 import { revalidatePath } from "next/cache";
 import { errorHandler, returnHandler } from "@/app/utils/utils";
-import { Prisma } from "@/generated/prisma/client";
+import { Prisma } from "@/prisma/generated/prisma/client";
 import { prettifyError } from "zod/v4";
 import {
   addProductVariantSchema,
