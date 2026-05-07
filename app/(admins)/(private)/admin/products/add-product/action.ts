@@ -4,7 +4,8 @@ import { initialState, productSchema } from "./type";
 import { getCurrentUser } from "@/app/libs/auth";
 import { uploadToCloudinary } from "@/app/libs/cloudinary";
 import { prisma } from "@/app/libs/prisma";
-import { Prisma } from "@/generated/prisma/client";
+import { Prisma } from "@/prisma/generated/prisma/client";
+
 import { errorHandler, returnHandler } from "@/app/utils/utils";
 
 export async function addProductAction(
