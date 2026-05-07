@@ -1,55 +1,36 @@
 "use server";
 import { getCategories } from "../action";
-import DeleteCategoryModel from "./DeleteCategoryModel";
-import EditCategoryModel from "./EditCategoryModel";
+import CategoryRow from "./CategoryRow";
 
 export default async function CategoriesTable() {
   const categories = await getCategories();
+  const topLevelCategories = categories.filter((cat) => cat.parentId === null);
+
   return (
     <div className="bg-background border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-b border-zinc-100 dark:border-zinc-900 bg-zinc-50/50 dark:bg-zinc-900/50">
-            <th className="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
-              Name
+            <th className="p-4 w-12 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
+              #
             </th>
-            <th className="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
-              Slug
+            <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest">
+              Category
             </th>
-            <th className="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
+            <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
+              Sub-categories
+            </th>
+            <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
               Products
             </th>
-            <th className="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-right">
+            <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-right">
               Actions
             </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-100 dark:divide-zinc-900">
-          {categories.map((cat) => (
-            <tr
-              key={cat.slug}
-              className="hover:bg-zinc-50/50 dark:hover:bg-zinc-900/20 transition-colors group"
-            >
-              <td className="px-6 py-4 text-sm font-bold tracking-tight">
-                {cat.name}
-              </td>
-              <td className="px-6 py-4 text-xs font-mono text-zinc-500">
-                {cat.slug}
-              </td>
-              <td className="px-6 py-4 text-xs font-bold text-zinc-400">
-                {cat._count.products} items
-              </td>
-              <td className="px-6 py-4 text-right">
-                <div className="flex justify-end gap-2">
-                  <EditCategoryModel
-                    name={cat.name}
-                    slug={cat.slug}
-                    id={cat.id}
-                  />
-                  <DeleteCategoryModel id={cat.id} />
-                </div>
-              </td>
-            </tr>
+          {topLevelCategories.map((cat, index) => (
+            <CategoryRow key={cat.id} category={cat} index={index} />
           ))}
         </tbody>
       </table>

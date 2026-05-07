@@ -123,15 +123,21 @@ export async function addCategoryAction(
 export async function getCategories() {
   try {
     const categories = await prisma.category.findMany({
-      select: {
+      include: {
         _count: {
           select: {
             products: true,
           },
         },
-        name: true,
-        slug: true,
-        id: true,
+        children: {
+          include: {
+            _count: {
+              select: {
+                products: true,
+              },
+            },
+          },
+        },
       },
     });
     return categories;
