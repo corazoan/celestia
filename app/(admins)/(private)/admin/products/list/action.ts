@@ -14,47 +14,56 @@ import { uploadToCloudinary } from "@/app/libs/cloudinary";
 import { ProductWithRelations } from "./type";
 
 export async function getProducts(): Promise<ProductWithRelations[]> {
-  const products = await prisma.product.findMany({
-    take: 10,
-    orderBy: {
-      createdAt: "desc",
-    },
-    select: {
-      id: true,
-      name: true,
-      categoryId: true,
-      unitId: true,
-      category: {
-        select: {
-          name: true,
-        },
+  const [products, productErr] = await prisma.product
+    .findMany({
+      take: 10,
+      orderBy: {
+        createdAt: "desc",
       },
-      unit: {
-        select: {
-          name: true,
-          abbr: true,
+      select: {
+        id: true,
+        name: true,
+        categoryId: true,
+        unitId: true,
+        category: {
+          select: {
+            name: true,
+          },
         },
-      },
-      ProductVariant: {
-        select: {
-          id: true,
-          regularPrice: true,
-          sellPrice: true,
-          stock: true,
-          status: true,
-          unitValue: true,
-          featuredImage: true,
-          variantImages: {
-            select: {
-              id: true,
-              url: true,
-              variantId: true,
+        unit: {
+          select: {
+            name: true,
+            abbr: true,
+          },
+        },
+        ProductVariant: {
+          select: {
+            id: true,
+            regularPrice: true,
+            sellPrice: true,
+            stock: true,
+            status: true,
+            unitValue: true,
+            featuredImage: true,
+            variantImages: {
+              select: {
+                id: true,
+                url: true,
+                variantId: true,
+              },
             },
           },
         },
       },
-    },
-  });
+    })
+    .then(returnHandler)
+    .catch(errorHandler);
+
+  if (productErr) {
+    console.error("Get error during fetching products", productErr);
+    return [];
+  }
+
   return products;
 }
 
