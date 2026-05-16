@@ -5,7 +5,7 @@ import UnitsInput from "./UnitsInput";
 import { useActionState } from "react";
 import { addProductAction } from "../action";
 import Form from "next/form";
-import { CategoryType, SubCategory } from "../../category/type";
+import { SubCategory } from "../../category/type";
 const initialState = { error: "", success: false };
 
 type Units = {
@@ -56,6 +56,17 @@ export function AddProductForm({
               type="text"
               placeholder="e.g. Essential Oversized Tee"
               className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-zinc-500"
+            />
+          </div>
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
+              Description
+            </label>
+            <textarea
+              name="description"
+              placeholder="e.g. Crafted from 100% organic cotton, this oversized tee offers both comfort and style..."
+              rows={4}
+              className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-zinc-500 resize-none"
             />
           </div>
           <CategoriesInput categories={categories} />

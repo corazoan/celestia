@@ -37,6 +37,7 @@ export const productSchema = z.object({
   regularPrice: z.coerce.number(),
   sellPrice: z.coerce.number(),
   stock: z.coerce.number(),
+  description: z.string(),
   featuredImage: fileSchema,
   galleryImage1: fileSchema,
   galleryImage2: fileSchema,

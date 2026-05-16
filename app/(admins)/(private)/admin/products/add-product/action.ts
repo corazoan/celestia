@@ -21,23 +21,25 @@ export async function addProductAction(
     regularPrice: parseFloat(data.get("regularPrice") as string),
     sellPrice: parseFloat(data.get("sellPrice") as string),
     stock: parseInt(data.get("stock") as string),
+    description: data.get("description") as string,
     featuredImage: data.get("featuredImage"),
     galleryImage1: data.get("galleryImage1"),
     galleryImage2: data.get("galleryImage2"),
     galleryImage3: data.get("galleryImage3"),
     galleryImage4: data.get("galleryImage4"),
   };
-  console.dir(rawData, { depth: null, color: true });
+
   const parse = productSchema.safeParse(rawData);
-  console.log("parsing now");
+
   if (!parse.success) {
-    console.log("parse error", parse.error);
+    console.error("parse error", parse.error);
     return { success: false, error: prettifyError(parse.error) };
   }
 
   const product = parse.data;
 
   const owner = await getCurrentUser();
+
   if (!owner) {
     console.log("no owner");
     return {
@@ -102,6 +104,7 @@ export async function addProductAction(
             regularPrice: product.regularPrice,
             sellPrice: product.sellPrice,
             stock: product.stock,
+            description: product.description,
             unitValue: product.unitValue,
             status: product.status,
             featuredImage: featuredImage?.publicId || "",
