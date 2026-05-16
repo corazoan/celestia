@@ -84,13 +84,7 @@ export default function AddVariantModel({
             </div>
 
             <form
-              action={async (formData) => {
-                await action(formData);
-                if (!state.error) {
-                  // We don't necessarily close on success if we want to add multiple,
-                  // but usually for modals we do. However, state is updated after async call.
-                }
-              }}
+              action={action}
               className="flex flex-col flex-1 overflow-hidden"
             >
               {/* Scrollable Body */}
@@ -144,6 +138,7 @@ export default function AddVariantModel({
                       type="number"
                       id="unitValue"
                       name="unitValue"
+                      placeholder="e.g. 500"
                       required
                       className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
                     />
@@ -159,6 +154,7 @@ export default function AddVariantModel({
                       type="number"
                       id="stock"
                       name="stock"
+                      placeholder="0"
                       required
                       className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
                     />
@@ -178,6 +174,7 @@ export default function AddVariantModel({
                       step="0.01"
                       id="regularPrice"
                       name="regularPrice"
+                      placeholder="0.00"
                       required
                       className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
                     />
@@ -194,6 +191,7 @@ export default function AddVariantModel({
                       step="0.01"
                       id="sellPrice"
                       name="sellPrice"
+                      placeholder="0.00"
                       required
                       className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
                     />

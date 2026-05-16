@@ -157,7 +157,7 @@ export default function ProductRow({
                           <div className="size-8 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden">
                             {product.ProductVariant[0]?.featuredImage ? (
                               <CldImage
-                                src={product.ProductVariant[0].featuredImage}
+                                src={variant.featuredImage}
                                 width="250"
                                 height="250"
                                 crop="fill"
