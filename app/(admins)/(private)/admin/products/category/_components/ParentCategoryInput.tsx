@@ -1,21 +1,32 @@
 "use client";
-import { SubCategory } from "../../category/type";
+type Unit = {
+  id: number;
+  name: string;
+  abbr: string;
+};
 
-export default function CategoriesInput({
+import { CategoryType } from "../type";
+
+export default function CategoryInput({
   categories,
 }: {
-  categories: SubCategory[];
+  categories: CategoryType[];
 }) {
+  //jiske pass parent nhi hai usko lena hai sirf
+
   return (
     <div className="space-y-2">
       <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
-        Category
+        Parent Category
       </label>
       <div className="relative">
         <select
-          name="categoryId"
-          className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors appearance-none cursor-pointer pr-10 uppercase font-bold tracking-widest text-xs"
+          name="parentId"
+          className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3  focus:outline-none focus:border-foreground transition-colors appearance-none cursor-pointer pr-10 uppercase font-bold tracking-widest text-xs"
         >
+          <option key={"undefine"} value={""}>
+            {"None"}
+          </option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}

@@ -1,8 +1,8 @@
-import { getCategories } from "../category/action";
+import { getSubCategories } from "../category/action";
 import { getUnits } from "../units/action";
 import { AddProductForm } from "./_components/AddPoductForm";
 export default async function AddProductPage() {
-  const categories = await getCategories();
+  const subCategories = await getSubCategories();
   const units = await getUnits();
 
   return (
@@ -18,7 +18,8 @@ export default async function AddProductPage() {
           </h1>
         </div>
 
-        <AddProductForm categories={categories} units={units} />
+        {/*Just give sub categories basic details */}
+        <AddProductForm categories={subCategories} units={units} />
       </div>
     </div>
   );

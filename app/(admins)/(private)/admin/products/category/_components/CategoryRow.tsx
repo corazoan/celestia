@@ -58,7 +58,7 @@ export default function CategoryRow({
           </div>
         </td>
         <td className="p-4 text-[11px] font-bold text-center">
-          {category._count.products} Products
+          {category.totalProducts} Products
         </td>
         <td className="p-4 text-right">
           <div className="flex justify-end items-center gap-2">

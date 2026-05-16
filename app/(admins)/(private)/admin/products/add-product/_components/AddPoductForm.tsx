@@ -5,16 +5,8 @@ import UnitsInput from "./UnitsInput";
 import { useActionState } from "react";
 import { addProductAction } from "../action";
 import Form from "next/form";
-
+import { CategoryType, SubCategory } from "../../category/type";
 const initialState = { error: "", success: false };
-type Categories = {
-  name: string;
-  id: number;
-  slug: string;
-  _count: {
-    products: number;
-  };
-}[];
 
 type Units = {
   name: string;
@@ -29,7 +21,7 @@ export function AddProductForm({
   categories,
   units,
 }: {
-  categories: Categories;
+  categories: SubCategory[];
   units: Units;
 }) {
   const [state, action, pending] = useActionState(

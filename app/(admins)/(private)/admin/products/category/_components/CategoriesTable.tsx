@@ -4,7 +4,6 @@ import CategoryRow from "./CategoryRow";
 
 export default async function CategoriesTable() {
   const categories = await getCategories();
-  const topLevelCategories = categories.filter((cat) => cat.parentId === null);
 
   return (
     <div className="bg-background border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
@@ -29,7 +28,7 @@ export default async function CategoriesTable() {
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-100 dark:divide-zinc-900">
-          {topLevelCategories.map((cat, index) => (
+          {categories.map((cat, index) => (
             <CategoryRow key={cat.id} category={cat} index={index} />
           ))}
         </tbody>

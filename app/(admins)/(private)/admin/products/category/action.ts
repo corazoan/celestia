@@ -10,6 +10,7 @@ import {
 } from "./type";
 import { errorHandler, returnHandler } from "@/app/utils/utils";
 import { getCurrentUser } from "@/app/libs/auth";
+import { prettifyError } from "zod";
 
 export async function addCategoryAction(
   initialState: addCategoryActionState,
@@ -67,13 +68,14 @@ export async function addCategoryAction(
     }
     revalidatePath("/admin/products/add-category");
   } else {
+    console.dir(formData, { depth: null, color: true });
     const parse = addCategorySchema.safeParse(
       Object.fromEntries(formData.entries()),
     );
     if (!parse.success) {
-      return { success: false, error: "Name and Slug are required" };
+      return { success: false, error: prettifyError(parse.error) };
     }
-    const { name, slug } = parse.data;
+    const { name, slug, parentId } = parse.data;
 
     const owner = await getCurrentUser();
     if (!owner)
@@ -93,6 +95,8 @@ export async function addCategoryAction(
         data: {
           name,
           slug: slug.trim().toLowerCase().replace(/\s+/g, "-"),
+          //if parent id is "" then set it to null
+          parentId: parentId !== 0 ? parentId : null,
         },
       })
       .then(returnHandler)
@@ -121,14 +125,15 @@ export async function addCategoryAction(
 }
 
 export async function getCategories() {
-  try {
-    const categories = await prisma.category.findMany({
-      include: {
-        _count: {
-          select: {
-            products: true,
-          },
-        },
+  const [categories, categoriesErr] = await prisma.category
+    .findMany({
+      where: {
+        parentId: null,
+      },
+      select: {
+        name: true,
+        id: true,
+        slug: true,
         children: {
           include: {
             _count: {
@@ -139,12 +144,58 @@ export async function getCategories() {
           },
         },
       },
-    });
-    return categories;
-  } catch (error) {
-    console.error(error);
+    })
+    .then(returnHandler)
+    .catch(errorHandler);
+
+  if (categoriesErr) {
+    console.error(categoriesErr);
     return [];
   }
+
+  const formatted = categories.map((category) => ({
+    ...category,
+    totalProducts: category.children.reduce(
+      (acc, child) => acc + child._count.products,
+      0,
+    ),
+  }));
+
+  return formatted;
+}
+export async function getSubCategories() {
+  const [subCategories, subCategoriesErr] = await prisma.category
+    .findMany({
+      where: {
+        parentId: {
+          not: null,
+        },
+      },
+      select: {
+        id: true,
+        parent: {
+          select: {
+            name: true,
+          },
+        },
+        name: true,
+        slug: true,
+        _count: {
+          select: {
+            products: true,
+          },
+        },
+      },
+    })
+    .then(returnHandler)
+    .catch(errorHandler);
+
+  if (subCategoriesErr) {
+    console.error("Get error during fetching subcategories", subCategoriesErr);
+    return [];
+  }
+
+  return subCategories;
 }
 
 export async function deleteCategory(id: number) {
