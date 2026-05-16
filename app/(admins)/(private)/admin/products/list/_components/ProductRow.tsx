@@ -68,7 +68,7 @@ export default function ProductRow({
                 {product.name}
               </span>
               <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-medium">
-                {product.category.name}
+                {product.categories.map((c) => c.category.name).join(", ")}
               </span>
             </div>
           </div>
@@ -155,12 +155,19 @@ export default function ProductRow({
                       >
                         <td className="p-3">
                           <div className="size-8 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-                            <CldImage
-                              src={variant.featuredImage}
-                              width="500"
-                              height="500"
-                              alt={`${product.name}`}
-                            />
+                            {product.ProductVariant[0]?.featuredImage ? (
+                              <CldImage
+                                src={product.ProductVariant[0].featuredImage}
+                                width="250"
+                                height="250"
+                                crop="fill"
+                                alt={`${product.name}`}
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-[8px] text-zinc-400 uppercase font-bold">
+                                No Img
+                              </div>
+                            )}
                           </div>
                         </td>
                         <td className="p-3 text-[10px] font-bold uppercase tracking-tight">

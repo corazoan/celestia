@@ -12,7 +12,23 @@ export async function addProductAction(
   initialState: initialState,
   data: FormData,
 ) {
-  const parse = productSchema.safeParse(Object.fromEntries(data.entries()));
+  const rawData = {
+    name: data.get("name"),
+    categoryIds: data.getAll("categoryIds").map((id) => parseInt(id as string)),
+    unitId: parseInt(data.get("unitId") as string),
+    unitValue: parseFloat(data.get("unitValue") as string),
+    status: data.get("status"),
+    regularPrice: parseFloat(data.get("regularPrice") as string),
+    sellPrice: parseFloat(data.get("sellPrice") as string),
+    stock: parseInt(data.get("stock") as string),
+    featuredImage: data.get("featuredImage"),
+    galleryImage1: data.get("galleryImage1"),
+    galleryImage2: data.get("galleryImage2"),
+    galleryImage3: data.get("galleryImage3"),
+    galleryImage4: data.get("galleryImage4"),
+  };
+  console.dir(rawData, { depth: null, color: true });
+  const parse = productSchema.safeParse(rawData);
   console.log("parsing now");
   if (!parse.success) {
     console.log("parse error", parse.error);
@@ -75,8 +91,12 @@ export async function addProductAction(
     .create({
       data: {
         name: product.name,
-        categoryId: product.categoryId,
         unitId: product.unitId,
+        categories: {
+          create: product.categoryIds.map((category) => ({
+            categoryId: category,
+          })),
+        },
         ProductVariant: {
           create: {
             regularPrice: product.regularPrice,

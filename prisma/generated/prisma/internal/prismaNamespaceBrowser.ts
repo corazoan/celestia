@@ -51,6 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  CategoriesOnProducts: 'CategoriesOnProducts',
   Address: 'Address',
   Admin: 'Admin',
   Category: 'Category',
@@ -79,6 +80,17 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const CategoriesOnProductsScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  productId: 'productId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoriesOnProductsScalarFieldEnum = (typeof CategoriesOnProductsScalarFieldEnum)[keyof typeof CategoriesOnProductsScalarFieldEnum]
 
 
 export const AddressScalarFieldEnum = {
@@ -168,7 +180,8 @@ export const ProductVariantScalarFieldEnum = {
   sellPrice: 'sellPrice',
   productId: 'productId',
   unitValue: 'unitValue',
-  status: 'status'
+  status: 'status',
+  description: 'description'
 } as const
 
 export type ProductVariantScalarFieldEnum = (typeof ProductVariantScalarFieldEnum)[keyof typeof ProductVariantScalarFieldEnum]
@@ -179,8 +192,7 @@ export const ProductScalarFieldEnum = {
   name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  unitId: 'unitId',
-  categoryId: 'categoryId'
+  unitId: 'unitId'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]

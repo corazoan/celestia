@@ -28,7 +28,9 @@ const fileSchema = z.custom(
 
 export const productSchema = z.object({
   name: z.string(),
-  categoryId: z.coerce.number(),
+  categoryIds: z
+    .array(z.number().int().positive())
+    .min(1, "At least one category is required"),
   unitId: z.coerce.number(),
   unitValue: z.coerce.number(),
   status: z.enum(["DRAFT", "ACTIVE", "INACTIVE"]),

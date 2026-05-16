@@ -384,6 +384,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  CategoriesOnProducts: 'CategoriesOnProducts',
   Address: 'Address',
   Admin: 'Admin',
   Category: 'Category',
@@ -411,10 +412,84 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "address" | "admin" | "category" | "image" | "orderItem" | "order" | "productVariant" | "product" | "session" | "verificationToken" | "unit" | "user"
+    modelProps: "categoriesOnProducts" | "address" | "admin" | "category" | "image" | "orderItem" | "order" | "productVariant" | "product" | "session" | "verificationToken" | "unit" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    CategoriesOnProducts: {
+      payload: Prisma.$CategoriesOnProductsPayload<ExtArgs>
+      fields: Prisma.CategoriesOnProductsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CategoriesOnProductsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriesOnProductsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CategoriesOnProductsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriesOnProductsPayload>
+        }
+        findFirst: {
+          args: Prisma.CategoriesOnProductsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriesOnProductsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CategoriesOnProductsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriesOnProductsPayload>
+        }
+        findMany: {
+          args: Prisma.CategoriesOnProductsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriesOnProductsPayload>[]
+        }
+        create: {
+          args: Prisma.CategoriesOnProductsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriesOnProductsPayload>
+        }
+        createMany: {
+          args: Prisma.CategoriesOnProductsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CategoriesOnProductsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriesOnProductsPayload>[]
+        }
+        delete: {
+          args: Prisma.CategoriesOnProductsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriesOnProductsPayload>
+        }
+        update: {
+          args: Prisma.CategoriesOnProductsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriesOnProductsPayload>
+        }
+        deleteMany: {
+          args: Prisma.CategoriesOnProductsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CategoriesOnProductsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CategoriesOnProductsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriesOnProductsPayload>[]
+        }
+        upsert: {
+          args: Prisma.CategoriesOnProductsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriesOnProductsPayload>
+        }
+        aggregate: {
+          args: Prisma.CategoriesOnProductsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCategoriesOnProducts>
+        }
+        groupBy: {
+          args: Prisma.CategoriesOnProductsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CategoriesOnProductsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CategoriesOnProductsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CategoriesOnProductsCountAggregateOutputType> | number
+        }
+      }
+    }
     Address: {
       payload: Prisma.$AddressPayload<ExtArgs>
       fields: Prisma.AddressFieldRefs
@@ -1342,6 +1417,17 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const CategoriesOnProductsScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  productId: 'productId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoriesOnProductsScalarFieldEnum = (typeof CategoriesOnProductsScalarFieldEnum)[keyof typeof CategoriesOnProductsScalarFieldEnum]
+
+
 export const AddressScalarFieldEnum = {
   id: 'id',
   firstName: 'firstName',
@@ -1429,7 +1515,8 @@ export const ProductVariantScalarFieldEnum = {
   sellPrice: 'sellPrice',
   productId: 'productId',
   unitValue: 'unitValue',
-  status: 'status'
+  status: 'status',
+  description: 'description'
 } as const
 
 export type ProductVariantScalarFieldEnum = (typeof ProductVariantScalarFieldEnum)[keyof typeof ProductVariantScalarFieldEnum]
@@ -1440,8 +1527,7 @@ export const ProductScalarFieldEnum = {
   name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  unitId: 'unitId',
-  categoryId: 'categoryId'
+  unitId: 'unitId'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
@@ -1536,20 +1622,6 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'String'
- */
-export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
-    
-
-
-/**
- * Reference to a field of type 'String[]'
- */
-export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
-
-
-/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -1560,6 +1632,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'String'
+ */
+export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+/**
+ * Reference to a field of type 'String[]'
+ */
+export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
     
 
 
@@ -1692,6 +1778,7 @@ export type PrismaClientOptions = ({
   comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
+  categoriesOnProducts?: Prisma.CategoriesOnProductsOmit
   address?: Prisma.AddressOmit
   admin?: Prisma.AdminOmit
   category?: Prisma.CategoryOmit

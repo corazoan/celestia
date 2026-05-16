@@ -53,6 +53,7 @@ export type ProductVariantMinAggregateOutputType = {
   productId: number | null
   unitValue: number | null
   status: $Enums.ProductStatus | null
+  description: string | null
 }
 
 export type ProductVariantMaxAggregateOutputType = {
@@ -64,6 +65,7 @@ export type ProductVariantMaxAggregateOutputType = {
   productId: number | null
   unitValue: number | null
   status: $Enums.ProductStatus | null
+  description: string | null
 }
 
 export type ProductVariantCountAggregateOutputType = {
@@ -75,6 +77,7 @@ export type ProductVariantCountAggregateOutputType = {
   productId: number
   unitValue: number
   status: number
+  description: number
   _all: number
 }
 
@@ -106,6 +109,7 @@ export type ProductVariantMinAggregateInputType = {
   productId?: true
   unitValue?: true
   status?: true
+  description?: true
 }
 
 export type ProductVariantMaxAggregateInputType = {
@@ -117,6 +121,7 @@ export type ProductVariantMaxAggregateInputType = {
   productId?: true
   unitValue?: true
   status?: true
+  description?: true
 }
 
 export type ProductVariantCountAggregateInputType = {
@@ -128,6 +133,7 @@ export type ProductVariantCountAggregateInputType = {
   productId?: true
   unitValue?: true
   status?: true
+  description?: true
   _all?: true
 }
 
@@ -226,6 +232,7 @@ export type ProductVariantGroupByOutputType = {
   productId: number
   unitValue: number
   status: $Enums.ProductStatus
+  description: string | null
   _count: ProductVariantCountAggregateOutputType | null
   _avg: ProductVariantAvgAggregateOutputType | null
   _sum: ProductVariantSumAggregateOutputType | null
@@ -260,6 +267,7 @@ export type ProductVariantWhereInput = {
   productId?: Prisma.IntFilter<"ProductVariant"> | number
   unitValue?: Prisma.IntFilter<"ProductVariant"> | number
   status?: Prisma.EnumProductStatusFilter<"ProductVariant"> | $Enums.ProductStatus
+  description?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
   variantImages?: Prisma.ImageListRelationFilter
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   orderItems?: Prisma.OrderItemListRelationFilter
@@ -274,6 +282,7 @@ export type ProductVariantOrderByWithRelationInput = {
   productId?: Prisma.SortOrder
   unitValue?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   variantImages?: Prisma.ImageOrderByRelationAggregateInput
   product?: Prisma.ProductOrderByWithRelationInput
   orderItems?: Prisma.OrderItemOrderByRelationAggregateInput
@@ -291,6 +300,7 @@ export type ProductVariantWhereUniqueInput = Prisma.AtLeast<{
   productId?: Prisma.IntFilter<"ProductVariant"> | number
   unitValue?: Prisma.IntFilter<"ProductVariant"> | number
   status?: Prisma.EnumProductStatusFilter<"ProductVariant"> | $Enums.ProductStatus
+  description?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
   variantImages?: Prisma.ImageListRelationFilter
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   orderItems?: Prisma.OrderItemListRelationFilter
@@ -305,6 +315,7 @@ export type ProductVariantOrderByWithAggregationInput = {
   productId?: Prisma.SortOrder
   unitValue?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProductVariantCountOrderByAggregateInput
   _avg?: Prisma.ProductVariantAvgOrderByAggregateInput
   _max?: Prisma.ProductVariantMaxOrderByAggregateInput
@@ -324,6 +335,7 @@ export type ProductVariantScalarWhereWithAggregatesInput = {
   productId?: Prisma.IntWithAggregatesFilter<"ProductVariant"> | number
   unitValue?: Prisma.IntWithAggregatesFilter<"ProductVariant"> | number
   status?: Prisma.EnumProductStatusWithAggregatesFilter<"ProductVariant"> | $Enums.ProductStatus
+  description?: Prisma.StringNullableWithAggregatesFilter<"ProductVariant"> | string | null
 }
 
 export type ProductVariantCreateInput = {
@@ -333,6 +345,7 @@ export type ProductVariantCreateInput = {
   sellPrice: number
   unitValue: number
   status?: $Enums.ProductStatus
+  description?: string | null
   variantImages?: Prisma.ImageCreateNestedManyWithoutVariantInput
   product: Prisma.ProductCreateNestedOneWithoutProductVariantInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
@@ -347,6 +360,7 @@ export type ProductVariantUncheckedCreateInput = {
   productId: number
   unitValue: number
   status?: $Enums.ProductStatus
+  description?: string | null
   variantImages?: Prisma.ImageUncheckedCreateNestedManyWithoutVariantInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
 }
@@ -358,6 +372,7 @@ export type ProductVariantUpdateInput = {
   sellPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   unitValue?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variantImages?: Prisma.ImageUpdateManyWithoutVariantNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutProductVariantNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
@@ -372,6 +387,7 @@ export type ProductVariantUncheckedUpdateInput = {
   productId?: Prisma.IntFieldUpdateOperationsInput | number
   unitValue?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variantImages?: Prisma.ImageUncheckedUpdateManyWithoutVariantNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -385,6 +401,7 @@ export type ProductVariantCreateManyInput = {
   productId: number
   unitValue: number
   status?: $Enums.ProductStatus
+  description?: string | null
 }
 
 export type ProductVariantUpdateManyMutationInput = {
@@ -394,6 +411,7 @@ export type ProductVariantUpdateManyMutationInput = {
   sellPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   unitValue?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductVariantUncheckedUpdateManyInput = {
@@ -405,6 +423,7 @@ export type ProductVariantUncheckedUpdateManyInput = {
   productId?: Prisma.IntFieldUpdateOperationsInput | number
   unitValue?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductVariantScalarRelationFilter = {
@@ -421,6 +440,7 @@ export type ProductVariantCountOrderByAggregateInput = {
   productId?: Prisma.SortOrder
   unitValue?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  description?: Prisma.SortOrder
 }
 
 export type ProductVariantAvgOrderByAggregateInput = {
@@ -441,6 +461,7 @@ export type ProductVariantMaxOrderByAggregateInput = {
   productId?: Prisma.SortOrder
   unitValue?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  description?: Prisma.SortOrder
 }
 
 export type ProductVariantMinOrderByAggregateInput = {
@@ -452,6 +473,7 @@ export type ProductVariantMinOrderByAggregateInput = {
   productId?: Prisma.SortOrder
   unitValue?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  description?: Prisma.SortOrder
 }
 
 export type ProductVariantSumOrderByAggregateInput = {
@@ -554,6 +576,7 @@ export type ProductVariantCreateWithoutVariantImagesInput = {
   sellPrice: number
   unitValue: number
   status?: $Enums.ProductStatus
+  description?: string | null
   product: Prisma.ProductCreateNestedOneWithoutProductVariantInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
 }
@@ -567,6 +590,7 @@ export type ProductVariantUncheckedCreateWithoutVariantImagesInput = {
   productId: number
   unitValue: number
   status?: $Enums.ProductStatus
+  description?: string | null
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
 }
 
@@ -593,6 +617,7 @@ export type ProductVariantUpdateWithoutVariantImagesInput = {
   sellPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   unitValue?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   product?: Prisma.ProductUpdateOneRequiredWithoutProductVariantNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
 }
@@ -606,6 +631,7 @@ export type ProductVariantUncheckedUpdateWithoutVariantImagesInput = {
   productId?: Prisma.IntFieldUpdateOperationsInput | number
   unitValue?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
@@ -616,6 +642,7 @@ export type ProductVariantCreateWithoutOrderItemsInput = {
   sellPrice: number
   unitValue: number
   status?: $Enums.ProductStatus
+  description?: string | null
   variantImages?: Prisma.ImageCreateNestedManyWithoutVariantInput
   product: Prisma.ProductCreateNestedOneWithoutProductVariantInput
 }
@@ -629,6 +656,7 @@ export type ProductVariantUncheckedCreateWithoutOrderItemsInput = {
   productId: number
   unitValue: number
   status?: $Enums.ProductStatus
+  description?: string | null
   variantImages?: Prisma.ImageUncheckedCreateNestedManyWithoutVariantInput
 }
 
@@ -655,6 +683,7 @@ export type ProductVariantUpdateWithoutOrderItemsInput = {
   sellPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   unitValue?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variantImages?: Prisma.ImageUpdateManyWithoutVariantNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutProductVariantNestedInput
 }
@@ -668,6 +697,7 @@ export type ProductVariantUncheckedUpdateWithoutOrderItemsInput = {
   productId?: Prisma.IntFieldUpdateOperationsInput | number
   unitValue?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variantImages?: Prisma.ImageUncheckedUpdateManyWithoutVariantNestedInput
 }
 
@@ -678,6 +708,7 @@ export type ProductVariantCreateWithoutProductInput = {
   sellPrice: number
   unitValue: number
   status?: $Enums.ProductStatus
+  description?: string | null
   variantImages?: Prisma.ImageCreateNestedManyWithoutVariantInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
 }
@@ -690,6 +721,7 @@ export type ProductVariantUncheckedCreateWithoutProductInput = {
   sellPrice: number
   unitValue: number
   status?: $Enums.ProductStatus
+  description?: string | null
   variantImages?: Prisma.ImageUncheckedCreateNestedManyWithoutVariantInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
 }
@@ -732,6 +764,7 @@ export type ProductVariantScalarWhereInput = {
   productId?: Prisma.IntFilter<"ProductVariant"> | number
   unitValue?: Prisma.IntFilter<"ProductVariant"> | number
   status?: Prisma.EnumProductStatusFilter<"ProductVariant"> | $Enums.ProductStatus
+  description?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
 }
 
 export type ProductVariantCreateManyProductInput = {
@@ -742,6 +775,7 @@ export type ProductVariantCreateManyProductInput = {
   sellPrice: number
   unitValue: number
   status?: $Enums.ProductStatus
+  description?: string | null
 }
 
 export type ProductVariantUpdateWithoutProductInput = {
@@ -751,6 +785,7 @@ export type ProductVariantUpdateWithoutProductInput = {
   sellPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   unitValue?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variantImages?: Prisma.ImageUpdateManyWithoutVariantNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
 }
@@ -763,6 +798,7 @@ export type ProductVariantUncheckedUpdateWithoutProductInput = {
   sellPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   unitValue?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   variantImages?: Prisma.ImageUncheckedUpdateManyWithoutVariantNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -775,6 +811,7 @@ export type ProductVariantUncheckedUpdateManyWithoutProductInput = {
   sellPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   unitValue?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -826,6 +863,7 @@ export type ProductVariantSelect<ExtArgs extends runtime.Types.Extensions.Intern
   productId?: boolean
   unitValue?: boolean
   status?: boolean
+  description?: boolean
   variantImages?: boolean | Prisma.ProductVariant$variantImagesArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   orderItems?: boolean | Prisma.ProductVariant$orderItemsArgs<ExtArgs>
@@ -841,6 +879,7 @@ export type ProductVariantSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   productId?: boolean
   unitValue?: boolean
   status?: boolean
+  description?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productVariant"]>
 
@@ -853,6 +892,7 @@ export type ProductVariantSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   productId?: boolean
   unitValue?: boolean
   status?: boolean
+  description?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productVariant"]>
 
@@ -865,9 +905,10 @@ export type ProductVariantSelectScalar = {
   productId?: boolean
   unitValue?: boolean
   status?: boolean
+  description?: boolean
 }
 
-export type ProductVariantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "stock" | "featuredImage" | "regularPrice" | "sellPrice" | "productId" | "unitValue" | "status", ExtArgs["result"]["productVariant"]>
+export type ProductVariantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "stock" | "featuredImage" | "regularPrice" | "sellPrice" | "productId" | "unitValue" | "status" | "description", ExtArgs["result"]["productVariant"]>
 export type ProductVariantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   variantImages?: boolean | Prisma.ProductVariant$variantImagesArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -897,6 +938,7 @@ export type $ProductVariantPayload<ExtArgs extends runtime.Types.Extensions.Inte
     productId: number
     unitValue: number
     status: $Enums.ProductStatus
+    description: string | null
   }, ExtArgs["result"]["productVariant"]>
   composites: {}
 }
@@ -1331,6 +1373,7 @@ export interface ProductVariantFieldRefs {
   readonly productId: Prisma.FieldRef<"ProductVariant", 'Int'>
   readonly unitValue: Prisma.FieldRef<"ProductVariant", 'Int'>
   readonly status: Prisma.FieldRef<"ProductVariant", 'ProductStatus'>
+  readonly description: Prisma.FieldRef<"ProductVariant", 'String'>
 }
     
 
