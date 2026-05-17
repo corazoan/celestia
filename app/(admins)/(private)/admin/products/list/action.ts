@@ -23,13 +23,17 @@ export async function getProducts(): Promise<ProductWithRelations[]> {
       select: {
         id: true,
         name: true,
-        categoryId: true,
-        unitId: true,
-        category: {
+        categories: {
           select: {
-            name: true,
+            categoryId: true,
+            category: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
+        unitId: true,
         unit: {
           select: {
             name: true,
@@ -42,6 +46,7 @@ export async function getProducts(): Promise<ProductWithRelations[]> {
             regularPrice: true,
             sellPrice: true,
             stock: true,
+            description: true,
             status: true,
             unitValue: true,
             featuredImage: true,
@@ -123,14 +128,20 @@ export async function updateProduct(
   prevState: editProductActionState,
   data: FormData,
 ) {
-  const parse = productEditSchema.safeParse(Object.fromEntries(data.entries()));
+  const rawData = {
+    id: parseInt(data.get("id") as string),
+    name: data.get("name"),
+    categoryIds: data.getAll("categoryIds").map((id) => parseInt(id as string)),
+    unitId: parseInt(data.get("unitId") as string),
+  };
+  const parse = productEditSchema.safeParse(rawData);
   if (!parse.success) {
     return {
       success: false,
       error: prettifyError(parse.error),
     };
   }
-  const { id, name, categoryId, unitId } = parse.data;
+  const { id, name, categoryIds, unitId } = parse.data;
 
   const owner = await getCurrentUser();
   if (!owner || owner.role !== "admin")
@@ -144,8 +155,11 @@ export async function updateProduct(
       where: { id },
       data: {
         name,
-        categoryId,
         unitId,
+        categories: {
+          deleteMany: {},
+          create: categoryIds.map((id) => ({ categoryId: id })),
+        },
       },
     })
     .then(returnHandler)
@@ -231,6 +245,7 @@ export async function addVariantAction(
         regularPrice: data.regularPrice,
         sellPrice: data.sellPrice,
         stock: data.stock,
+        description: data.description,
         unitValue: data.unitValue,
         status: data.status,
         featuredImage: featuredImage?.publicId || "",
@@ -319,6 +334,7 @@ export async function updateProductVariant(
     unitValue: data.unitValue,
     status: data.status,
     stock: data.stock,
+    description: data.description,
   };
 
   const file = [

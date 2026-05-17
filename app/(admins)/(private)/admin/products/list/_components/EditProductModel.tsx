@@ -1,23 +1,25 @@
 "use client";
 import { useActionState, useState } from "react";
 import { updateProduct } from "../action";
-import { CategoryType, ProductWithRelations, UnitType } from "../type";
+import { ProductWithRelations, UnitType } from "../type";
+import { SubCategory } from "../../category/type";
+import EditCategoryInput from "./EditCategoryInput";
 
 const initialState = { success: false, error: "" };
 
 export default function EditProductModel({
   product,
-  categories,
+  subCategories,
   units,
 }: {
   product: ProductWithRelations;
-  categories: CategoryType[];
+  subCategories: SubCategory[];
   units: UnitType[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: product.name,
-    categoryId: product.categoryId,
+    categoryId: product.categories.map((category) => category.categoryId),
     unitId: product.unitId,
   });
 
@@ -129,27 +131,11 @@ export default function EditProductModel({
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label
-                    htmlFor="categoryId"
-                    className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest"
-                  >
-                    Category
-                  </label>
-                  <select
-                    id="categoryId"
-                    name="categoryId"
-                    value={formData.categoryId}
-                    onChange={handleChange}
-                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors appearance-none"
-                  >
-                    {categories.map((cat) => (
-                      <option key={cat.id} value={cat.id}>
-                        {cat.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <EditCategoryInput
+                  selecteCategories={formData.categoryId}
+                  categories={subCategories}
+                />
+
                 <div className="space-y-2">
                   <label
                     htmlFor="unitId"

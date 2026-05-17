@@ -1,14 +1,15 @@
 // import { YourComponentProps } from "../type";
+import { SubCategory } from "../../category/type";
 import { CategoryType, ProductWithRelations, UnitType } from "../type";
 import ProductRow from "./ProductRow";
 
 export default function ProductListTable({
   products,
-  categories,
+  subCategories,
   units,
 }: {
   products: ProductWithRelations[];
-  categories: CategoryType[];
+  subCategories: SubCategory[];
   units: UnitType[];
 }) {
   return (
@@ -39,10 +40,10 @@ export default function ProductListTable({
         <tbody className="divide-y divide-zinc-100 dark:divide-zinc-900">
           {products.map((product, index) => (
             <ProductRow
+              subCategories={subCategories}
               key={product.name}
               index={index}
               product={product}
-              categories={categories}
               units={units}
             />
           ))}

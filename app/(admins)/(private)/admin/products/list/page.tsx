@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { getProducts } from "./action";
 import ProductListTable from "./_components/ProductListTable";
-import { getCategories } from "../category/action";
+import { getSubCategories } from "../category/action";
 import { getUnits } from "../units/action";
 
 export default async function ProductsPage() {
   const products = await getProducts();
-  const categories = await getCategories();
+  const subCategories = await getSubCategories();
   const units = await getUnits();
 
   return (
@@ -60,7 +60,7 @@ export default async function ProductsPage() {
         {/* Product List Table */}
         <ProductListTable
           products={products}
-          categories={categories}
+          subCategories={subCategories}
           units={units}
         />
         {/* Pagination */}

@@ -8,16 +8,17 @@ import DeleteVariantModel from "./DeleteVariantModel";
 import AddVariantModel from "./AddVariantModel";
 import EditProductModel from "./EditProductModel";
 import DeleteProductModel from "./DeleteProductModel";
+import { SubCategory } from "../../category/type";
 
 export default function ProductRow({
   product,
   index,
-  categories,
+  subCategories,
   units,
 }: {
   product: ProductWithRelations;
   index: number;
-  categories: CategoryType[];
+  subCategories: SubCategory[];
   units: UnitType[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -111,7 +112,7 @@ export default function ProductRow({
             <div className="flex items-center border-l border-zinc-100 dark:border-zinc-800 ml-2 pl-2">
               <EditProductModel
                 product={product}
-                categories={categories}
+                subCategories={subCategories}
                 units={units}
               />
               <DeleteProductModel id={product.id} />

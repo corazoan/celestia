@@ -7,6 +7,7 @@ export interface Variant {
   regularPrice: number;
   sellPrice: number;
   unitValue: number;
+  description?: string | null;
   status: "DRAFT" | "ACTIVE" | "INACTIVE";
   variantImages: {
     id: string;
@@ -18,7 +19,9 @@ export interface Variant {
 export const productEditSchema = z.object({
   id: z.coerce.number(),
   name: z.string(),
-  categoryId: z.coerce.number(),
+  categoryIds: z
+    .array(z.number().int().positive())
+    .min(1, "At least one category is required"),
   unitId: z.coerce.number(),
 });
 
@@ -26,13 +29,17 @@ export type ProductWithRelations = Prisma.ProductGetPayload<{
   select: {
     id: true;
     name: true;
-    categoryId: true;
-    unitId: true;
-    category: {
+    categories: {
       select: {
-        name: true;
+        categoryId: true;
+        category: {
+          select: {
+            name: true;
+          };
+        };
       };
     };
+    unitId: true;
     unit: {
       select: {
         name: true;
@@ -45,6 +52,7 @@ export type ProductWithRelations = Prisma.ProductGetPayload<{
         regularPrice: true;
         sellPrice: true;
         stock: true;
+        description: true;
         status: true;
         unitValue: true;
         featuredImage: true;
@@ -62,14 +70,18 @@ export type ProductWithRelations = Prisma.ProductGetPayload<{
 
 export type CategoryType = Prisma.CategoryGetPayload<{
   select: {
-    _count: {
-      select: {
-        products: true;
+    name: true;
+    id: true;
+    slug: true;
+    children: {
+      include: {
+        _count: {
+          select: {
+            products: true;
+          };
+        };
       };
     };
-    name: true;
-    slug: true;
-    id: true;
   };
 }>;
 
@@ -110,6 +122,7 @@ export const productVariantSchema = z.object({
   regularPrice: z.coerce.number(),
   sellPrice: z.coerce.number(),
   unitValue: z.coerce.number(),
+  description: z.string().optional(),
   status: z.enum(["DRAFT", "ACTIVE", "INACTIVE"]),
   initFeaturedImage: z.string().optional(),
   initGalleryImage1: z.string().optional(),
@@ -129,6 +142,7 @@ export const addProductVariantSchema = z.object({
   regularPrice: z.coerce.number(),
   sellPrice: z.coerce.number(),
   unitValue: z.coerce.number(),
+  description: z.string().optional(),
   status: z.enum(["DRAFT", "ACTIVE", "INACTIVE"]),
   featuredImage: fileSchema,
   galleryImage1: fileSchema,
