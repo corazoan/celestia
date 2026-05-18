@@ -20,6 +20,7 @@ export default function EditVariantModel({
     sellPrice: variant.sellPrice,
     unitValue: variant.unitValue,
     status: variant.status,
+    description: variant.description ?? "",
   });
 
   const [state, action, pending] = useActionState(
@@ -28,7 +29,9 @@ export default function EditVariantModel({
   );
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -214,6 +217,24 @@ export default function EditVariantModel({
                       className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
                     />
                   </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label
+                    htmlFor="description"
+                    className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    placeholder="Variant specific description..."
+                    rows={3}
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors resize-none"
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

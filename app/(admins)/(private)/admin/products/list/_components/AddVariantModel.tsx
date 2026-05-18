@@ -161,6 +161,22 @@ export default function AddVariantModel({
                   </div>
                 </div>
 
+                <div className="space-y-2">
+                  <label
+                    htmlFor="description"
+                    className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Variant specific description..."
+                    rows={3}
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors resize-none"
+                  />
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label
@@ -236,7 +252,7 @@ export default function AddVariantModel({
               </div>
 
               {/* Fixed Footer */}
-              <div className="p-6 border-t border-zinc-100 dark:border-zinc-900 flex-shrink-0 bg-background">
+              <div className="p-6 border-t border-zinc-100 dark:border-zinc-900 shrink-0 bg-background">
                 <button
                   type="submit"
                   disabled={pending}
