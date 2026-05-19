@@ -104,6 +104,13 @@ export async function addCategoryAction(
         .then(returnHandler)
         .catch(errorHandler);
 
+      if (verifyParentId) {
+        return {
+          success: false,
+          error: "An error occurred while verifying the parent category.",
+        };
+      }
+
       if (!parent) {
         return {
           success: false,
