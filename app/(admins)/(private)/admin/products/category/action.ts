@@ -90,6 +90,28 @@ export async function addCategoryAction(
         error: "You don't have permission to perform this action.",
       };
 
+    // check only if parentId is greater than 0 and don't have value like null
+    if (parentId) {
+      const [parent, verifyParentId] = await prisma.category
+        .findFirst({
+          where: {
+            id: parentId,
+          },
+          select: {
+            id: true,
+          },
+        })
+        .then(returnHandler)
+        .catch(errorHandler);
+
+      if (!parent) {
+        return {
+          success: false,
+          error: "There is no category with the given ID.",
+        };
+      }
+    }
+
     const [, resultError] = await prisma.category
       .create({
         data: {

@@ -51,7 +51,7 @@ export default function EditCategoryModel({
           <div className="relative bg-background border border-zinc-200 dark:border-zinc-800 shadow-2xl w-full max-w-md animate-in fade-in zoom-in duration-200">
             <div className="p-6 border-b border-zinc-100 dark:border-zinc-900 flex justify-between items-center">
               <h2 className="text-lg font-bold italic tracking-tighter uppercase">
-                New Category
+                Edit Category
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
@@ -138,7 +138,7 @@ export default function EditCategoryModel({
                 disabled={pending}
                 className="w-full bg-foreground text-background py-4 text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity disabled:opacity-50"
               >
-                {pending ? "Processing..." : "Create Category"}
+                {pending ? "Processing..." : "Edit Category"}
               </button>
             </form>
           </div>
