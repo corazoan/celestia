@@ -3,7 +3,7 @@ import { useActionState, useState } from "react";
 import { addCategoryAction } from "../action";
 const initialState = { error: "", success: false };
 import { CategoryType } from "../type";
-import CategoryInput from "./ParentCategoryInput";
+import ParentCategoryInput from "./ParentCategoryInput";
 
 export default function AddCategoryModel({
   categories,
@@ -126,7 +126,7 @@ export default function AddCategoryModel({
                   className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-zinc-500"
                 />
               </div>
-              <CategoryInput categories={categories} />
+              <ParentCategoryInput categories={categories} />
               <button
                 type="submit"
                 disabled={pending}

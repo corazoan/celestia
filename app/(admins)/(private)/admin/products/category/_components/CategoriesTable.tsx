@@ -29,7 +29,12 @@ export default async function CategoriesTable() {
         </thead>
         <tbody className="divide-y divide-zinc-100 dark:divide-zinc-900">
           {categories.map((cat, index) => (
-            <CategoryRow key={cat.id} category={cat} index={index} />
+            <CategoryRow
+              categories={categories}
+              key={cat.id}
+              category={cat}
+              index={index}
+            />
           ))}
         </tbody>
       </table>

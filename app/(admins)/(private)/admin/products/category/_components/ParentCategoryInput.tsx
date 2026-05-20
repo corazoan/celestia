@@ -7,9 +7,11 @@ type Unit = {
 
 import { CategoryType } from "../type";
 
-export default function CategoryInput({
+export default function ParentCategoryInput({
   categories,
+  previousParentId,
 }: {
+  previousParentId?: CategoryType;
   categories: CategoryType[];
 }) {
   //jiske pass parent nhi hai usko lena hai sirf
@@ -22,16 +24,25 @@ export default function CategoryInput({
       <div className="relative">
         <select
           name="parentId"
-          className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3  focus:outline-none focus:border-foreground transition-colors appearance-none cursor-pointer pr-10 uppercase font-bold tracking-widest text-xs"
+          className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 focus:outline-none focus:border-foreground transition-colors appearance-none cursor-pointer pr-10 uppercase font-bold tracking-widest text-xs"
         >
-          <option key={"undefine"} value={""}>
-            {"None"}
-          </option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
+          {previousParentId && (
+            <option key={previousParentId.id} value={previousParentId.id}>
+              {previousParentId.name}
             </option>
-          ))}
+          )}
+
+          <option key="none" value="">
+            None
+          </option>
+
+          {categories
+            .filter((category) => category.id !== previousParentId?.id)
+            .map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
         </select>
         <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
           <svg

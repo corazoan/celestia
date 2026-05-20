@@ -1,6 +1,8 @@
 "use client";
 import { useActionState, useState } from "react";
 import { addCategoryAction } from "../action";
+import { CategoryType } from "../type";
+import ParentCategoryInput from "./ParentCategoryInput";
 
 const initialState = { success: false, error: "" };
 
@@ -8,10 +10,14 @@ export default function EditCategoryModel({
   name,
   slug,
   id,
+  categories,
+  parentId,
 }: {
   name: string;
   slug: string;
   id: number;
+  categories: CategoryType[];
+  parentId?: number | null;
 }) {
   const [nameValue, setName] = useState(name);
   const [slugValue, setSlug] = useState(slug);
@@ -133,6 +139,13 @@ export default function EditCategoryModel({
                   className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-zinc-500"
                 />
               </div>
+              <ParentCategoryInput
+                previousParentId={categories.find(
+                  (category) => category.id === parentId,
+                )}
+                categories={categories}
+              />
+
               <button
                 type="submit"
                 disabled={pending}

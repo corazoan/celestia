@@ -10,6 +10,7 @@ export const editCategorySchema = z.object({
   name: z.string().min(1),
   slug: z.string().min(1),
   id: z.string().min(1),
+  parentId: z.coerce.number().gte(0),
 });
 
 export type addCategoryActionState = {

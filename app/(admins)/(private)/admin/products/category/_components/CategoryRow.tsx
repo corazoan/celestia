@@ -8,7 +8,9 @@ import { CategoryType } from "../type";
 export default function CategoryRow({
   category,
   index,
+  categories,
 }: {
+  categories: CategoryType[];
   category: CategoryType;
   index: number;
 }) {
@@ -63,6 +65,7 @@ export default function CategoryRow({
         <td className="p-4 text-right">
           <div className="flex justify-end items-center gap-2">
             <EditCategoryModel
+              categories={categories}
               name={category.name}
               slug={category.slug}
               id={category.id}
@@ -114,6 +117,8 @@ export default function CategoryRow({
                               name={child.name}
                               slug={child.slug}
                               id={child.id}
+                              parentId={child.parentId}
+                              categories={categories}
                             />
                             <DeleteCategoryModel id={child.id} />
                           </div>

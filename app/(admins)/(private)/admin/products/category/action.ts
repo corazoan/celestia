@@ -23,7 +23,7 @@ export async function addCategoryAction(
     if (!parse.success) {
       return { success: false, error: "Name and Slug are required" };
     }
-    const { name, slug, id } = parse.data;
+    const { name, slug, id, parentId } = parse.data;
 
     const owner = await getCurrentUser();
     if (!owner)
@@ -38,6 +38,34 @@ export async function addCategoryAction(
         error: "You don't have permission to perform this action.",
       };
 
+    if (parentId) {
+      const [parent, verifyParentId] = await prisma.category
+        .findFirst({
+          where: {
+            id: parentId,
+          },
+          select: {
+            id: true,
+          },
+        })
+        .then(returnHandler)
+        .catch(errorHandler);
+
+      if (verifyParentId) {
+        return {
+          success: false,
+          error: "An error occurred while verifying the parent category.",
+        };
+      }
+
+      if (!parent) {
+        return {
+          success: false,
+          error: "There is no category with the given ID.",
+        };
+      }
+    }
+
     const [, resultError] = await prisma.category
       .update({
         where: {
@@ -46,6 +74,7 @@ export async function addCategoryAction(
         data: {
           name,
           slug: slug.trim().toLowerCase().replace(/\s+/g, "-"),
+          parentId: parentId ? parentId : null,
         },
       })
       .then(returnHandler)
@@ -125,7 +154,8 @@ export async function addCategoryAction(
           name,
           slug: slug.trim().toLowerCase().replace(/\s+/g, "-"),
           //if parent id is "" then set it to null
-          parentId: parentId !== 0 ? parentId : null,
+          // parent Id is already verified there are only two possiblity either parentId is verfied or parentId have value NaN, undefine, null, 0
+          parentId: parentId ? parentId : null,
         },
       })
       .then(returnHandler)
