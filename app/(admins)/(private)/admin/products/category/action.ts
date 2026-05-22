@@ -226,8 +226,8 @@ export async function getSubCategories() {
   const [subCategories, subCategoriesErr] = await prisma.category
     .findMany({
       where: {
-        parentId: {
-          not: null,
+        children: {
+          none: {},
         },
       },
       select: {
