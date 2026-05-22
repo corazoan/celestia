@@ -74,6 +74,7 @@ export async function addProductAction(
 
   // Check for errors
   for (const [, resultErr] of results) {
+    console.error(resultErr);
     if (resultErr) return { success: false, error: "Failed to upload images." };
   }
 
