@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CategoryType, ProductWithRelations, UnitType } from "../type";
+import { ProductWithRelations, UnitType } from "../type";
 import { CldImage } from "next-cloudinary";
 import EditVariantModel from "./EditVariantModel";
 import DeleteVariantModel from "./DeleteVariantModel";
@@ -69,7 +69,9 @@ export default function ProductRow({
                 {product.name}
               </span>
               <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-medium">
-                {product.categories.map((c) => c.category.name).join(", ")}
+                {product.productCategories
+                  .map((c) => c.category.name)
+                  .join(", ")}
               </span>
             </div>
           </div>

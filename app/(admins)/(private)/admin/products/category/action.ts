@@ -197,7 +197,7 @@ export async function getCategories() {
           include: {
             _count: {
               select: {
-                products: true,
+                productCategories: true,
               },
             },
           },
@@ -215,7 +215,7 @@ export async function getCategories() {
   const formatted = categories.map((category) => ({
     ...category,
     totalProducts: category.children.reduce(
-      (acc, child) => acc + child._count.products,
+      (acc, child) => acc + child._count.productCategories,
       0,
     ),
   }));
@@ -241,7 +241,7 @@ export async function getSubCategories() {
         slug: true,
         _count: {
           select: {
-            products: true,
+            productCategories: true,
           },
         },
       },

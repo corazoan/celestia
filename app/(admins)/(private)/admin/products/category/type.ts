@@ -25,13 +25,13 @@ export type CategoryType = {
 export type Category = Prisma.CategoryGetPayload<{
   select: {
     name: true;
-    slug: true;
     id: true;
+    slug: true;
     children: {
       include: {
         _count: {
           select: {
-            products: true;
+            productCategories: true;
           };
         };
       };
@@ -51,7 +51,7 @@ export type SubCategory = Prisma.CategoryGetPayload<{
     slug: true;
     _count: {
       select: {
-        products: true;
+        productCategories: true;
       };
     };
   };

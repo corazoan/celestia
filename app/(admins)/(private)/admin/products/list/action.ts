@@ -23,7 +23,7 @@ export async function getProducts(): Promise<ProductWithRelations[]> {
       select: {
         id: true,
         name: true,
-        categories: {
+        productCategories: {
           select: {
             categoryId: true,
             category: {
@@ -156,7 +156,7 @@ export async function updateProduct(
       data: {
         name,
         unitId,
-        categories: {
+        productCategories: {
           deleteMany: {},
           create: categoryIds.map((id) => ({ categoryId: id })),
         },

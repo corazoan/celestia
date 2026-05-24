@@ -1,6 +1,6 @@
 // import { YourComponentProps } from "../type";
 import { SubCategory } from "../../category/type";
-import { CategoryType, ProductWithRelations, UnitType } from "../type";
+import { ProductWithRelations, UnitType } from "../type";
 import ProductRow from "./ProductRow";
 
 export default function ProductListTable({

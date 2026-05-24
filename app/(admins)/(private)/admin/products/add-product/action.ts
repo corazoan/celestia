@@ -95,7 +95,7 @@ export async function addProductAction(
       data: {
         name: product.name,
         unitId: product.unitId,
-        categories: {
+        productCategories: {
           create: product.categoryIds.map((category) => ({
             categoryId: category,
           })),

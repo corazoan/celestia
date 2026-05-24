@@ -29,7 +29,7 @@ export type ProductWithRelations = Prisma.ProductGetPayload<{
   select: {
     id: true;
     name: true;
-    categories: {
+    productCategories: {
       select: {
         categoryId: true;
         category: {
@@ -68,22 +68,22 @@ export type ProductWithRelations = Prisma.ProductGetPayload<{
   };
 }>;
 
-export type CategoryType = Prisma.CategoryGetPayload<{
-  select: {
-    name: true;
-    id: true;
-    slug: true;
-    children: {
-      include: {
-        _count: {
-          select: {
-            products: true;
-          };
-        };
-      };
-    };
-  };
-}>;
+// export type CategoryType = Prisma.CategoryGetPayload<{
+//   select: {
+//     name: true;
+//     id: true;
+//     slug: true;
+//     children: {
+//       include: {
+//         _count: {
+//           select: {
+//             products: true;
+//           };
+//         };
+//       };
+//     };
+//   };
+// }>;
 
 export type UnitType = Prisma.UnitGetPayload<{
   select: {

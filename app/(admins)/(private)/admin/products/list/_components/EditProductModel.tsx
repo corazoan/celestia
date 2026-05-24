@@ -19,7 +19,9 @@ export default function EditProductModel({
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: product.name,
-    categoryId: product.categories.map((category) => category.categoryId),
+    categoryId: product.productCategories.map(
+      (category) => category.categoryId,
+    ),
     unitId: product.unitId,
   });
 

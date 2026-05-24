@@ -109,7 +109,7 @@ export default function CategoryRow({
                           {child.slug}
                         </td>
                         <td className="p-3 text-center text-[10px] font-bold text-zinc-600 dark:text-zinc-400">
-                          {child._count.products}
+                          {child._count.productCategories}
                         </td>
                         <td className="p-3 text-right">
                           <div className="flex justify-end items-center">
