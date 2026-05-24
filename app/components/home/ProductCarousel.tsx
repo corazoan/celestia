@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
+import Link from "next/link";
 
 interface Product {
   id: number;
@@ -20,12 +21,14 @@ interface Product {
 
 interface ProductCarouselProps {
   title: string;
+  slug: string;
   products: Product[];
 }
 
 export default function ProductCarousel({
   title,
   products,
+  slug,
 }: ProductCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
@@ -61,14 +64,17 @@ export default function ProductCarousel({
   if (!products || products.length === 0) return null;
 
   return (
-    <section className="py-8 max-w-[1400px] mx-auto overflow-hidden">
+    <section className="py-8 max-w-350 mx-auto overflow-hidden">
       <div className="flex items-center justify-between mb-5 px-5 md:px-10">
         <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-zinc-100 tracking-tight">
           {title}
         </h2>
-        <button className="text-green-600 font-bold text-sm md:text-base hover:text-green-700 transition-colors">
+        <Link
+          href={`/collections/${slug}`}
+          className="text-green-600 font-bold text-sm md:text-base hover:text-green-700 transition-colors"
+        >
           see all
-        </button>
+        </Link>
       </div>
 
       <div className="relative group px-5 md:px-10">

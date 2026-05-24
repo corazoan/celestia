@@ -22,7 +22,7 @@ export default function ProductCard({
   const hasDiscount = regularPrice && regularPrice > price;
 
   return (
-    <div className="flex flex-col border border-gray-100 dark:border-zinc-800 rounded-xl p-3 bg-white dark:bg-zinc-900 w-[180px] min-w-[180px] shadow-sm hover:shadow-md transition-shadow group">
+    <div className="flex flex-col border border-gray-100 dark:border-zinc-800 rounded-xl p-3 bg-white dark:bg-zinc-900 w-45 min-w-45 shadow-sm hover:shadow-md transition-shadow group">
       {/* Image Container */}
       <div className="relative aspect-square mb-3 flex items-center justify-center overflow-hidden">
         {image ? (
@@ -51,30 +51,6 @@ export default function ProductCard({
             </svg>
           </div>
         )}
-      </div>
-
-      {/* Time Badge */}
-      <div className="flex items-center gap-1.5 mb-2">
-        <div className="bg-gray-100 dark:bg-zinc-800 p-0.5 rounded">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-gray-600 dark:text-zinc-400"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <polyline points="12 6 12 12 16 14" />
-          </svg>
-        </div>
-        <span className="text-[10px] font-bold uppercase tracking-tight text-gray-700 dark:text-zinc-300">
-          15 MINS
-        </span>
       </div>
 
       {/* Product Name */}

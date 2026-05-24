@@ -15,14 +15,14 @@ export async function getHomaPageProducts() {
               {
                 children: {
                   some: {
-                    products: {
+                    productCategories: {
                       some: {},
                     },
                   },
                 },
               },
               {
-                products: {
+                productCategories: {
                   some: {},
                 },
               },
@@ -33,15 +33,16 @@ export async function getHomaPageProducts() {
       select: {
         id: true,
         name: true,
+        slug: true,
         children: {
           where: {
-            products: {
+            productCategories: {
               some: {},
             },
           },
           select: {
             name: true,
-            products: {
+            productCategories: {
               take: 10,
               select: {
                 product: {
@@ -69,7 +70,7 @@ export async function getHomaPageProducts() {
             },
           },
         },
-        products: {
+        productCategories: {
           take: 10,
           select: {
             product: {
@@ -109,6 +110,7 @@ export async function getHomaPageProducts() {
     return {
       name: category.name,
       id: category.id,
+      slug: category.slug,
       products: getUniqueProductsForCategory(category),
     };
   });
@@ -117,10 +119,12 @@ export async function getHomaPageProducts() {
 }
 
 function getUniqueProductsForCategory(category: {
+  id: number;
   name: string;
+  slug: string;
   children: {
     name: string;
-    products: {
+    productCategories: {
       product: {
         id: number;
         name: string;
@@ -137,7 +141,7 @@ function getUniqueProductsForCategory(category: {
       };
     }[];
   }[];
-  products: {
+  productCategories: {
     product: {
       id: number;
       name: string;
@@ -157,13 +161,13 @@ function getUniqueProductsForCategory(category: {
   const uniqueProducts = new Map();
 
   // 1. Add direct products (if any)
-  category.products.forEach((item) => {
+  category.productCategories.forEach((item) => {
     uniqueProducts.set(item.product.id, item.product);
   });
 
   // 2. Add subcategory products
   category.children.forEach((subCategory) => {
-    subCategory.products.forEach((item) => {
+    subCategory.productCategories.forEach((item) => {
       // The Map automatically overwrites duplicates based on the product ID
       uniqueProducts.set(item.product.id, item.product);
     });
@@ -172,21 +176,3 @@ function getUniqueProductsForCategory(category: {
   // Convert the Map back to an array
   return Array.from(uniqueProducts.values());
 }
-// id: true,
-// name: true,
-// unit: {
-//   select: {
-//     name: true,
-//   },
-// },
-// ProductVariant: {
-//   take: 1,
-//   select: {
-//     id: true,
-//     sellPrice: true,
-//     regularPrice: true,
-//     featuredImage: true,
-//     unitValue: true,
-//   },
-// },
-// },

@@ -24,6 +24,7 @@ export default async function Home() {
           <div key={category.id}>
             {category.products && category.products.length > 0 && (
               <ProductCarousel
+                slug={category.slug}
                 title={category.name.toUpperCase()}
                 products={category.products}
               />
