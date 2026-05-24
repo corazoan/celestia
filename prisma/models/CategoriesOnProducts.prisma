@@ -7,5 +7,6 @@ model CategoriesOnProducts {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
+  @@unique([categoryId, productId])
   @@map("categories_on_products")
 }

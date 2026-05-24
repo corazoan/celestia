@@ -1,12 +1,12 @@
 model Product {
-  id             Int                    @id @default(autoincrement())
-  name           String                 @unique
-  createdAt      DateTime               @default(now())
-  updatedAt      DateTime               @updatedAt
-  unit           Unit                   @relation(fields: [unitId], references: [id], onDelete: Cascade)
-  unitId         Int                    @map("unit_id")
-  ProductVariant ProductVariant[]
-  categories     CategoriesOnProducts[]
+  id                Int                    @id @default(autoincrement())
+  name              String                 @unique
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+  unit              Unit                   @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  unitId            Int                    @map("unit_id")
+  ProductVariant    ProductVariant[]
+  productCategories CategoriesOnProducts[]
 
   @@map("products")
 }

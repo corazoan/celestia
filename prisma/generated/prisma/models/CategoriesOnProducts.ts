@@ -240,6 +240,7 @@ export type CategoriesOnProductsOrderByWithRelationInput = {
 
 export type CategoriesOnProductsWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  categoryId_productId?: Prisma.CategoriesOnProductsCategoryIdProductIdCompoundUniqueInput
   AND?: Prisma.CategoriesOnProductsWhereInput | Prisma.CategoriesOnProductsWhereInput[]
   OR?: Prisma.CategoriesOnProductsWhereInput[]
   NOT?: Prisma.CategoriesOnProductsWhereInput | Prisma.CategoriesOnProductsWhereInput[]
@@ -249,7 +250,7 @@ export type CategoriesOnProductsWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"CategoriesOnProducts"> | Date | string
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
-}, "id">
+}, "id" | "categoryId_productId">
 
 export type CategoriesOnProductsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -278,8 +279,8 @@ export type CategoriesOnProductsScalarWhereWithAggregatesInput = {
 export type CategoriesOnProductsCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutProductsInput
-  product: Prisma.ProductCreateNestedOneWithoutCategoriesInput
+  category: Prisma.CategoryCreateNestedOneWithoutProductCategoriesInput
+  product: Prisma.ProductCreateNestedOneWithoutProductCategoriesInput
 }
 
 export type CategoriesOnProductsUncheckedCreateInput = {
@@ -293,8 +294,8 @@ export type CategoriesOnProductsUncheckedCreateInput = {
 export type CategoriesOnProductsUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
-  product?: Prisma.ProductUpdateOneRequiredWithoutCategoriesNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutProductCategoriesNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutProductCategoriesNestedInput
 }
 
 export type CategoriesOnProductsUncheckedUpdateInput = {
@@ -324,6 +325,11 @@ export type CategoriesOnProductsUncheckedUpdateManyInput = {
   productId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CategoriesOnProductsCategoryIdProductIdCompoundUniqueInput = {
+  categoryId: number
+  productId: number
 }
 
 export type CategoriesOnProductsCountOrderByAggregateInput = {
@@ -471,7 +477,7 @@ export type CategoriesOnProductsUncheckedUpdateManyWithoutProductNestedInput = {
 export type CategoriesOnProductsCreateWithoutCategoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  product: Prisma.ProductCreateNestedOneWithoutCategoriesInput
+  product: Prisma.ProductCreateNestedOneWithoutProductCategoriesInput
 }
 
 export type CategoriesOnProductsUncheckedCreateWithoutCategoryInput = {
@@ -521,7 +527,7 @@ export type CategoriesOnProductsScalarWhereInput = {
 export type CategoriesOnProductsCreateWithoutProductInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutProductsInput
+  category: Prisma.CategoryCreateNestedOneWithoutProductCategoriesInput
 }
 
 export type CategoriesOnProductsUncheckedCreateWithoutProductInput = {
@@ -567,7 +573,7 @@ export type CategoriesOnProductsCreateManyCategoryInput = {
 export type CategoriesOnProductsUpdateWithoutCategoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  product?: Prisma.ProductUpdateOneRequiredWithoutCategoriesNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutProductCategoriesNestedInput
 }
 
 export type CategoriesOnProductsUncheckedUpdateWithoutCategoryInput = {
@@ -594,7 +600,7 @@ export type CategoriesOnProductsCreateManyProductInput = {
 export type CategoriesOnProductsUpdateWithoutProductInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutProductsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutProductCategoriesNestedInput
 }
 
 export type CategoriesOnProductsUncheckedUpdateWithoutProductInput = {
