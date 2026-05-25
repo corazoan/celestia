@@ -34,7 +34,8 @@ export default async function CategoryPage({
           Category not found
         </h1>
         <p className="text-gray-500 dark:text-zinc-400 mt-2">
-          {/*The category you are looking for doesn't exist or has no products.*/}
+          The category you are looking for doesn&apos;t exist or has no
+          products.
         </p>
         <Link
           href="/"
