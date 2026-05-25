@@ -111,6 +111,7 @@ export default function ProductCarousel({
           {products.map((item) => (
             <div key={item.id} className="snap-start">
               <ProductCard
+                id={item.id}
                 name={item.name}
                 image={item.ProductVariant[0]?.featuredImage}
                 unitValue={item.ProductVariant[0]?.unitValue}

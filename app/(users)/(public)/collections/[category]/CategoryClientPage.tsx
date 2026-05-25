@@ -74,9 +74,9 @@ export default function CategoryClientPage({
           <nav className="flex flex-row md:flex-col gap-1 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 scrollbar-hide">
             <button
               onClick={() => setSelectedCategoryName("All")}
-              className={`px-4 py-2.5 cursor-pointer rounded-xl text-sm font-semibold transition-all duration-200 whitespace-nowrap text-left ${
+              className={`px-4 py-2.5 border-none cursor-pointer rounded-xl text-sm font-semibold transition-all duration-200 whitespace-nowrap text-left  outline-none ${
                 selectedCategoryName === "All"
-                  ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-100 dark:border-green-800/50"
+                  ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 "
                   : "text-gray-600 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800/50"
               }`}
             >
@@ -86,9 +86,9 @@ export default function CategoryClientPage({
               <button
                 key={child.name}
                 onClick={() => setSelectedCategoryName(child.name)}
-                className={`px-4 cursor-pointer py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 whitespace-nowrap text-left ${
+                className={`px-4 cursor-pointer py-2.5 border-none rounded-xl text-sm font-semibold transition-all duration-200 whitespace-nowrap text-left ${
                   selectedCategoryName === child.name
-                    ? "bg-green-50  dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-100 dark:border-green-800/50"
+                    ? "bg-green-50  dark:bg-green-900/20 text-green-700 dark:text-green-400 "
                     : "text-gray-600 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800/50"
                 }`}
               >
@@ -117,6 +117,7 @@ export default function CategoryClientPage({
             {displayedProducts.map((product) => (
               <div key={product.id} className="flex justify-center">
                 <ProductCard
+                  id={product.id}
                   name={product.name}
                   image={product.ProductVariant[0]?.featuredImage}
                   unitValue={product.ProductVariant[0]?.unitValue}
@@ -149,7 +150,7 @@ export default function CategoryClientPage({
               No products found
             </h3>
             <p className="text-gray-500 dark:text-zinc-400 mt-2">
-              {/*We couldn't find any products in this category.*/}
+              We couldn&apos; find any products in this category.
             </p>
           </div>
         )}

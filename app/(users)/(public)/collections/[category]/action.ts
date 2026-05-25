@@ -1,8 +1,7 @@
+"use server";
 import { prisma } from "@/app/libs/prisma";
 import { errorHandler, returnHandler } from "@/app/utils/utils";
-
 export default async function getProductByCategory(category: string) {
-  console.log("slug", category);
   const [categoryWithProducts, categoryWithProductErr] = await prisma.category
     .findUnique({
       where: {
