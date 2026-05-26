@@ -30,6 +30,10 @@ export default function ProductCarousel({
   products,
   slug,
 }: ProductCarouselProps) {
+  // console.log(
+  //   "product unit value",
+  //   `${products[0]?.ProductVariant[0]?.unitValue}`,
+  // );
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);

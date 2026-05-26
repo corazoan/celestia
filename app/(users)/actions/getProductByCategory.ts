@@ -10,6 +10,7 @@ export async function getHomaPageProducts() {
       where: {
         AND: [
           { parentId: null },
+
           {
             OR: [
               {
@@ -44,6 +45,15 @@ export async function getHomaPageProducts() {
             name: true,
             productCategories: {
               take: 10,
+              where: {
+                product: {
+                  ProductVariant: {
+                    some: {
+                      status: "ACTIVE",
+                    },
+                  },
+                },
+              },
               select: {
                 product: {
                   select: {
@@ -71,6 +81,15 @@ export async function getHomaPageProducts() {
           },
         },
         productCategories: {
+          where: {
+            product: {
+              ProductVariant: {
+                some: {
+                  status: "ACTIVE",
+                },
+              },
+            },
+          },
           take: 10,
           select: {
             product: {
@@ -84,6 +103,9 @@ export async function getHomaPageProducts() {
                 },
                 ProductVariant: {
                   take: 1,
+                  where: {
+                    status: "ACTIVE",
+                  },
                   select: {
                     id: true,
                     sellPrice: true,
@@ -106,6 +128,7 @@ export async function getHomaPageProducts() {
     return [];
   }
 
+  console.dir(collection, { depth: null, color: true });
   const filterCollection = collection.map((category) => {
     return {
       name: category.name,
@@ -114,7 +137,7 @@ export async function getHomaPageProducts() {
       products: getUniqueProductsForCategory(category),
     };
   });
-  console.dir(filterCollection, { depth: null, color: true });
+  // console.dir(filterCollection, { depth: null, color: true });
   return filterCollection;
 }
 
