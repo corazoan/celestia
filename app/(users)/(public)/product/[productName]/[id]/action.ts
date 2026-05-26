@@ -14,6 +14,11 @@ export default async function getProductById(id: string) {
     .findUnique({
       where: {
         id: parse.data.id,
+        ProductVariant: {
+          some: {
+            status: "ACTIVE",
+          },
+        },
       },
       select: {
         id: true,
@@ -37,6 +42,13 @@ export default async function getProductById(id: string) {
                     productId: {
                       not: parse.data.id,
                     },
+                    product: {
+                      ProductVariant: {
+                        some: {
+                          status: "ACTIVE",
+                        },
+                      },
+                    },
                   },
                   select: {
                     product: {
@@ -55,6 +67,7 @@ export default async function getProductById(id: string) {
                           },
                           select: {
                             id: true,
+                            status: true,
                             sellPrice: true,
                             regularPrice: true,
                             featuredImage: true,
@@ -78,6 +91,7 @@ export default async function getProductById(id: string) {
             regularPrice: true,
             sellPrice: true,
             stock: true,
+            status: true,
             featuredImage: true,
             unitValue: true,
             description: true,
@@ -93,6 +107,7 @@ export default async function getProductById(id: string) {
     .then(returnHandler)
     .catch(errorHandler);
 
+  // console.dir(product, { depth: null, color: true });
   if (productErr) return null;
 
   return product;

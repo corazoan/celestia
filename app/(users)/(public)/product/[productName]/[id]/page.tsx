@@ -16,6 +16,5 @@ export default async function ProductPage({
     notFound();
   }
 
-  // @ts-expect-error - ProductVariant type mismatch from prisma select
   return <ProductClientPage product={product} />;
 }
