@@ -42,7 +42,7 @@ export default function ProductRow({
     <>
       <tr
         onClick={() => setIsOpen(!isOpen)}
-        className="hover:bg-zinc-50 dark:hover:bg-zinc-900/30 transition-colors group border-b border-zinc-100 dark:border-zinc-900 cursor-pointer"
+        className="hover:bg-zinc-50 dark:hover:bg-zinc-900/30 transition-colors group border-b border-zinc-100 dark:border-zinc-900 cursor-pointer select-none"
       >
         <td className="hidden md:table-cell p-4 text-[11px] font-medium text-zinc-400 text-center">
           {index + 1}
@@ -156,7 +156,7 @@ export default function ProductRow({
                     {product.ProductVariant.map((variant) => (
                       <tr
                         key={variant.id}
-                        className="hover:bg-zinc-50/50 dark:hover:bg-zinc-900/20 transition-colors"
+                        className="hover:bg-zinc-50/50 dark:hover:bg-zinc-900/20 transition-colors select-none"
                       >
                         <td className="p-3">
                           <div className="size-8 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden">
