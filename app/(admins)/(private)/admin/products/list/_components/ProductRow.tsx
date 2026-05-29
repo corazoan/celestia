@@ -44,17 +44,17 @@ export default function ProductRow({
         onClick={() => setIsOpen(!isOpen)}
         className="hover:bg-zinc-50 dark:hover:bg-zinc-900/30 transition-colors group border-b border-zinc-100 dark:border-zinc-900 cursor-pointer"
       >
-        <td className="p-4 text-[11px] font-medium text-zinc-400 text-center">
+        <td className="hidden md:table-cell p-4 text-[11px] font-medium text-zinc-400 text-center">
           {index + 1}
         </td>
         <td className="p-4">
           <div className="flex items-center gap-3">
-            <div className="size-10 bg-zinc-100 dark:bg-zinc-900 rounded-none border border-zinc-200 dark:border-zinc-800 overflow-hidden shrink-0">
+            <div className="size-8 md:size-10 bg-zinc-100 dark:bg-zinc-900 rounded-none border border-zinc-200 dark:border-zinc-800 overflow-hidden shrink-0">
               {product.ProductVariant[0]?.featuredImage ? (
                 <CldImage
                   src={product.ProductVariant[0].featuredImage}
-                  width="250"
-                  height="250"
+                  width="100"
+                  height="100"
                   crop="fill"
                   alt={`${product.name}`}
                 />
@@ -64,11 +64,11 @@ export default function ProductRow({
                 </div>
               )}
             </div>
-            <div className="flex flex-col">
-              <span className="text-[11px] font-bold uppercase tracking-tight">
+            <div className="flex flex-col min-w-0">
+              <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-tight truncate">
                 {product.name}
               </span>
-              <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-medium">
+              <span className="text-[8px] md:text-[9px] text-zinc-500 uppercase tracking-widest font-medium truncate">
                 {product.productCategories
                   .map((c) => c.category.name)
                   .join(", ")}
@@ -76,7 +76,7 @@ export default function ProductRow({
             </div>
           </div>
         </td>
-        <td className="p-4 text-[11px] text-zinc-500 uppercase tracking-widest font-medium text-center">
+        <td className="hidden lg:table-cell p-4 text-[11px] text-zinc-500 uppercase tracking-widest font-medium text-center">
           <div className="flex items-center justify-center gap-2">
             {product.ProductVariant.length} Variants
             <svg
@@ -93,7 +93,9 @@ export default function ProductRow({
             </svg>
           </div>
         </td>
-        <td className="p-4 text-[11px] font-bold text-center">{priceRange}</td>
+        <td className="p-4 text-[10px] md:text-[11px] font-bold text-center">
+          {priceRange}
+        </td>
         <td className="p-4 text-center">
           <span
             className={`text-[11px] font-bold ${
@@ -106,12 +108,12 @@ export default function ProductRow({
           </span>
         </td>
         <td className="p-4 text-right">
-          <div className="flex justify-end items-center gap-2">
+          <div className="flex justify-end items-center gap-1 md:gap-2">
             <AddVariantModel
               productId={product.id}
               unitAbbr={product.unit.abbr}
             />
-            <div className="flex items-center border-l border-zinc-100 dark:border-zinc-800 ml-2 pl-2">
+            <div className="flex items-center border-l border-zinc-100 dark:border-zinc-800 ml-1 md:ml-2 pl-1 md:pl-2">
               <EditProductModel
                 product={product}
                 subCategories={subCategories}
@@ -125,13 +127,13 @@ export default function ProductRow({
       {isOpen && (
         <tr className="bg-zinc-50/50 dark:bg-zinc-900/10">
           <td colSpan={6} className="p-0">
-            <div className="p-4 pb-8">
-              <div className="border border-zinc-200 dark:border-zinc-800 bg-background overflow-hidden shadow-sm">
-                <table className="w-full text-left border-collapse">
+            <div className="p-2 md:p-4 pb-8">
+              <div className="border border-zinc-200 dark:border-zinc-800 bg-background overflow-x-auto shadow-sm">
+                <table className="w-full text-left border-collapse min-w-125 md:min-w-full">
                   <thead>
                     <tr className="bg-zinc-50 dark:bg-zinc-900/50 border-b border-zinc-100 dark:border-zinc-900">
                       <th className="p-3 text-[9px] uppercase font-bold text-zinc-400 tracking-widest">
-                        Variant Image
+                        Image
                       </th>
                       <th className="p-3 text-[9px] uppercase font-bold text-zinc-400 tracking-widest">
                         Value

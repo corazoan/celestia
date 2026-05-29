@@ -14,16 +14,16 @@ export default function ProductListTable({
 }) {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-left border-collapse">
+      <table className="w-full text-left border-collapse min-w-[650px] md:min-w-full">
         <thead>
           <tr className="bg-zinc-50 dark:bg-zinc-900/50 border-b border-zinc-100 dark:border-zinc-900">
-            <th className="p-4 w-12 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
+            <th className="hidden md:table-cell p-4 w-12 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
               #
             </th>
             <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest">
               Product
             </th>
-            <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
+            <th className="hidden lg:table-cell p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
               Variants
             </th>
             <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">

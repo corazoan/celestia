@@ -6,20 +6,20 @@ import EditUnitModel from "./EditUnitModel";
 export default async function UnitsTable() {
   const units = await getUnits();
   return (
-    <div className="bg-background border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
-      <table className="w-full text-left border-collapse">
+    <div className="bg-background border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-x-auto">
+      <table className="w-full text-left border-collapse min-w-[500px] md:min-w-full">
         <thead>
           <tr className="border-b border-zinc-100 dark:border-zinc-900 bg-zinc-50/50 dark:bg-zinc-900/50">
-            <th className="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
+            <th className="px-4 md:px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
               Name
             </th>
-            <th className="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
-              Abbreviation
+            <th className="px-4 md:px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
+              Abbr
             </th>
-            <th className="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
+            <th className="hidden sm:table-cell px-4 md:px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
               Products
             </th>
-            <th className="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-right">
+            <th className="px-4 md:px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-right">
               Actions
             </th>
           </tr>
@@ -59,17 +59,17 @@ export default async function UnitsTable() {
                 key={unit.id}
                 className="hover:bg-zinc-50/50 dark:hover:bg-zinc-900/20 transition-colors group"
               >
-                <td className="px-6 py-4 text-sm font-bold tracking-tight">
+                <td className="px-4 md:px-6 py-4 text-xs md:text-sm font-bold tracking-tight">
                   {unit.name}
                 </td>
-                <td className="px-6 py-4 text-xs font-mono text-zinc-500 uppercase">
+                <td className="px-4 md:px-6 py-4 text-[10px] md:text-xs font-mono text-zinc-500 uppercase">
                   {unit.abbr}
                 </td>
-                <td className="px-6 py-4 text-xs font-bold text-zinc-400">
+                <td className="hidden sm:table-cell px-4 md:px-6 py-4 text-xs font-bold text-zinc-400">
                   {unit._count.products} items
                 </td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex justify-end gap-2">
+                <td className="px-4 md:px-6 py-4 text-right">
+                  <div className="flex justify-end gap-1 md:gap-2">
                     <EditUnitModel
                       name={unit.name}
                       abbr={unit.abbr}

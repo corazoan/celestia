@@ -1,7 +1,7 @@
 export default function TableSkeleton() {
   return (
-    <div className="bg-background border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
-      <div className="animate-pulse">
+    <div className="bg-background border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-x-auto">
+      <div className="animate-pulse min-w-[500px] md:min-w-full">
         <div className="border-b border-zinc-100 dark:border-zinc-900 bg-zinc-50/50 dark:bg-zinc-900/50">
           <div className="px-6 py-4 flex gap-4">
             <div className="h-3 bg-zinc-200 dark:bg-zinc-700 rounded w-16"></div>

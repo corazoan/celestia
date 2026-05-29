@@ -25,7 +25,7 @@ export default function AddVariantModel({
           e.stopPropagation();
           setIsOpen(true);
         }}
-        className="flex items-center gap-2 px-3 py-1.5 bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 text-[10px] font-bold uppercase tracking-widest hover:opacity-90 transition-opacity"
+        className="flex items-center gap-2 p-1.5 md:px-3 md:py-1.5 bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 text-[10px] font-bold uppercase tracking-widest hover:opacity-90 transition-opacity"
         title="Add Variant"
       >
         <svg
@@ -42,7 +42,7 @@ export default function AddVariantModel({
           <path d="M5 12h14" />
           <path d="M12 5v14" />
         </svg>
-        Add Variant
+        <span className="hidden md:inline">Add Variant</span>
       </button>
 
       {isOpen && (

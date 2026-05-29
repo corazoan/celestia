@@ -25,20 +25,20 @@ export default function CategoryRow({
           hasChildren ? "cursor-pointer" : ""
         }`}
       >
-        <td className="p-4 text-[11px] font-medium text-zinc-400 text-center">
+        <td className="hidden md:table-cell p-4 text-[11px] font-medium text-zinc-400 text-center">
           {index + 1}
         </td>
         <td className="p-4">
           <div className="flex flex-col">
-            <span className="text-[11px] font-bold uppercase tracking-tight">
+            <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-tight">
               {category.name}
             </span>
-            <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-medium">
+            <span className="text-[8px] md:text-[9px] text-zinc-500 uppercase tracking-widest font-medium">
               Category
             </span>
           </div>
         </td>
-        <td className="p-4 text-[11px] text-zinc-500 uppercase tracking-widest font-medium text-center">
+        <td className="p-4 text-[10px] md:text-[11px] text-zinc-500 uppercase tracking-widest font-medium text-center">
           <div className="flex items-center justify-center gap-2">
             {category.children.length} Sub-categories
             {hasChildren && (
@@ -59,11 +59,11 @@ export default function CategoryRow({
             )}
           </div>
         </td>
-        <td className="p-4 text-[11px] font-bold text-center">
+        <td className="hidden sm:table-cell p-4 text-[11px] font-bold text-center">
           {category.totalProducts} Products
         </td>
         <td className="p-4 text-right">
-          <div className="flex justify-end items-center gap-2">
+          <div className="flex justify-end items-center gap-1 md:gap-2">
             <EditCategoryModel
               categories={categories}
               name={category.name}
@@ -77,15 +77,15 @@ export default function CategoryRow({
       {isOpen && hasChildren && (
         <tr className="bg-zinc-50/50 dark:bg-zinc-900/10">
           <td colSpan={5} className="p-0">
-            <div className="p-4 pb-8">
-              <div className="border border-zinc-200 dark:border-zinc-800 bg-background overflow-hidden shadow-sm">
-                <table className="w-full text-left border-collapse">
+            <div className="p-2 md:p-4 pb-8">
+              <div className="border border-zinc-200 dark:border-zinc-800 bg-background overflow-x-auto shadow-sm">
+                <table className="w-full text-left border-collapse min-w-[500px] md:min-w-full">
                   <thead>
                     <tr className="bg-zinc-50 dark:bg-zinc-900/50 border-b border-zinc-100 dark:border-zinc-900">
                       <th className="p-3 text-[9px] uppercase font-bold text-zinc-400 tracking-widest">
                         Sub-Category
                       </th>
-                      <th className="p-3 text-[9px] uppercase font-bold text-zinc-400 tracking-widest">
+                      <th className="hidden sm:table-cell p-3 text-[9px] uppercase font-bold text-zinc-400 tracking-widest">
                         Slug
                       </th>
                       <th className="p-3 text-[9px] uppercase font-bold text-zinc-400 tracking-widest text-center">
@@ -102,10 +102,17 @@ export default function CategoryRow({
                         key={child.id}
                         className="hover:bg-zinc-50/50 dark:hover:bg-zinc-900/20 transition-colors"
                       >
-                        <td className="p-3 text-[10px] font-bold uppercase tracking-tight">
-                          {child.name}
+                        <td className="p-3">
+                          <div className="flex flex-col">
+                            <span className="text-[10px] font-bold uppercase tracking-tight">
+                              {child.name}
+                            </span>
+                            <span className="sm:hidden text-[8px] text-zinc-400 font-mono">
+                              {child.slug}
+                            </span>
+                          </div>
                         </td>
-                        <td className="p-3 text-[10px] font-mono text-zinc-500">
+                        <td className="hidden sm:table-cell p-3 text-[10px] font-mono text-zinc-500">
                           {child.slug}
                         </td>
                         <td className="p-3 text-center text-[10px] font-bold text-zinc-600 dark:text-zinc-400">

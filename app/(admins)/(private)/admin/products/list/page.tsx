@@ -10,10 +10,10 @@ export default async function ProductsPage() {
   const units = await getUnits();
 
   return (
-    <div className="p-8 flex-1 overflow-auto">
+    <div className="p-4 md:p-8 flex-1 overflow-auto">
       <div className="bg-background border border-zinc-200 dark:border-zinc-800 shadow-xs">
         {/* Table Header Action Bar */}
-        <div className="p-6 border-b border-zinc-100 dark:border-zinc-900 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="p-4 md:p-6 border-b border-zinc-100 dark:border-zinc-900 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h3 className="text-sm font-bold uppercase tracking-[0.2em]">
               Product List
@@ -64,7 +64,7 @@ export default async function ProductsPage() {
           units={units}
         />
         {/* Pagination */}
-        <div className="p-6 border-t border-zinc-100 dark:border-zinc-900 flex items-center justify-between">
+        <div className="p-4 md:p-6 border-t border-zinc-100 dark:border-zinc-900 flex items-center justify-between">
           <button
             className="px-4 py-2 border border-zinc-200 dark:border-zinc-800 text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors disabled:opacity-30 cursor-pointer"
             disabled

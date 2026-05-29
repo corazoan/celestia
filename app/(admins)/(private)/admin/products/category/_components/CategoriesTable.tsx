@@ -6,11 +6,11 @@ export default async function CategoriesTable() {
   const categories = await getCategories();
 
   return (
-    <div className="bg-background border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
-      <table className="w-full text-left border-collapse">
+    <div className="bg-background border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-x-auto">
+      <table className="w-full text-left border-collapse min-w-[600px] md:min-w-full">
         <thead>
           <tr className="border-b border-zinc-100 dark:border-zinc-900 bg-zinc-50/50 dark:bg-zinc-900/50">
-            <th className="p-4 w-12 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
+            <th className="hidden md:table-cell p-4 w-12 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
               #
             </th>
             <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest">
@@ -19,7 +19,7 @@ export default async function CategoriesTable() {
             <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
               Sub-categories
             </th>
-            <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
+            <th className="hidden sm:table-cell p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-center">
               Products
             </th>
             <th className="p-4 text-[10px] uppercase font-bold text-zinc-400 tracking-widest text-right">

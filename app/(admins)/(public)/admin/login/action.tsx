@@ -108,7 +108,7 @@ export default async function AdminLoginAction(
 
   cookieStore.set("sessionId", session.id, {
     httpOnly: true,
-    secure: true,
+    secure: env.ENV === "production",
     sameSite: "strict",
     maxAge: 60 * 60 * 24 * 7,
   });

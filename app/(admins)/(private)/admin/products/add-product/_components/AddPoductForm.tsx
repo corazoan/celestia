@@ -182,17 +182,17 @@ export function AddProductForm({
       </div>
 
       {/* Action Bar (Sticky Footer) */}
-      <div className="fixed bottom-0 left-64 right-0 bg-background/80 backdrop-blur-md border-t border-zinc-200 dark:border-zinc-800 p-4 flex justify-end gap-4 z-30">
+      <div className="fixed bottom-0 lg:left-64 left-0 right-0 bg-background/80 backdrop-blur-md border-t border-zinc-200 dark:border-zinc-800 p-4 flex items-center justify-between md:justify-end gap-4 z-30">
         <button
           type="button"
-          className="px-8 py-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-foreground transition-colors"
+          className="px-4 md:px-8 py-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-foreground transition-colors whitespace-nowrap"
         >
           Discard Changes
         </button>
         <button
           disabled={pending}
           type="submit"
-          className="bg-foreground text-background px-12 py-3 text-[10px] font-bold uppercase tracking-widest hover:opacity-90 transition-opacity"
+          className="bg-foreground text-background px-6 md:px-12 py-3 text-[10px] font-bold uppercase tracking-widest hover:opacity-90 transition-opacity whitespace-nowrap"
         >
           {pending ? "Processing..." : "Publish Product"}
         </button>

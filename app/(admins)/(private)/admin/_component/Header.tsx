@@ -1,11 +1,33 @@
-export default function Header() {
+export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   return (
-    <header className="h-20 bg-background border-b border-zinc-200 dark:border-zinc-800 px-8 flex items-center justify-between sticky top-0 z-30">
-      <h2 className="text-xl font-bold tracking-tighter uppercase italic">
-        Welcome
-      </h2>
+    <header className="h-20 bg-background border-b border-zinc-200 dark:border-zinc-800 px-4 md:px-8 flex items-center justify-between sticky top-0 z-30">
+      <div className="flex items-center gap-4">
+        <button
+          onClick={onMenuClick}
+          className="lg:hidden text-zinc-400 hover:text-foreground transition-colors cursor-pointer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+        </button>
+        <h2 className="text-xl font-bold tracking-tighter uppercase italic">
+          Welcome
+        </h2>
+      </div>
 
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-3 md:gap-6">
         <button className="text-zinc-400 hover:text-foreground transition-colors cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
