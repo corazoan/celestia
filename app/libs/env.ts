@@ -15,6 +15,7 @@ export const env = createEnv({
     NEXT_PUBLIC_CLOUDFLARED_SITE_KEY: z.string().min(1),
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().min(1),
     NEXT_PUBLIC_APP_URL: z.url().default("http://localhost:3000"),
+    NEXT_PUBLIC_VERCEL_URL: z.string().min(1),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
@@ -23,5 +24,6 @@ export const env = createEnv({
     NEXT_PUBLIC_CLOUDFLARED_SITE_KEY:
       process.env.NEXT_PUBLIC_CLOUDFLARED_SITE_KEY,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
   },
 });

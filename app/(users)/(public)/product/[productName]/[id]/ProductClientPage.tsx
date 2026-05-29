@@ -78,8 +78,6 @@ export default function ProductClientPage({ product }: ProductClientPageProps) {
       100,
   );
 
-  console.dir();
-
   // Flatten similar products from all categories
   const similarProducts = product.productCategories
     .flatMap((pc) => pc.category.productCategories.map((cpc) => cpc.product))
