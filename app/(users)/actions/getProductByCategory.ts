@@ -128,7 +128,6 @@ export async function getHomaPageProducts() {
     return [];
   }
 
-  console.dir(collection, { depth: null, color: true });
   const filterCollection = collection.map((category) => {
     return {
       name: category.name,

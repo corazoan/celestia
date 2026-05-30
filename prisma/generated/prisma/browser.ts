@@ -33,6 +33,16 @@ export type Address = Prisma.AddressModel
  */
 export type Admin = Prisma.AdminModel
 /**
+ * Model Cart
+ * 
+ */
+export type Cart = Prisma.CartModel
+/**
+ * Model CartItem
+ * 
+ */
+export type CartItem = Prisma.CartItemModel
+/**
  * Model Category
  * 
  */

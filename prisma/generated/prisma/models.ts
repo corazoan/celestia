@@ -11,6 +11,8 @@
 export type * from './models/CategoriesOnProducts'
 export type * from './models/Address'
 export type * from './models/Admin'
+export type * from './models/Cart'
+export type * from './models/CartItem'
 export type * from './models/Category'
 export type * from './models/Image'
 export type * from './models/OrderItem'

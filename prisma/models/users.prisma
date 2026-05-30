@@ -1,15 +1,16 @@
 model User {
-  id           String  @id @default(cuid())
-  firstName    String
-  lastName     String
-  phoneNumber  String    @unique
-  email        String    @unique
-  verified     Boolean   @default(false)
-  orders       Order[]
-  address      Address[]
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  sessions     Session[]
+  id          String    @id @default(cuid())
+  firstName   String
+  lastName    String
+  phoneNumber String    @unique
+  email       String    @unique
+  verified    Boolean   @default(false)
+  orders      Order[]
+  address     Address[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  sessions    Session[]
+  cart        Cart?
 
   @@map("users")
 }
