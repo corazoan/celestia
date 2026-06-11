@@ -27,7 +27,7 @@ export default function ProductCard({
 
   return (
     <Link
-      href={`product/${name.toLowerCase().trim().split(" ").join("-")}/${id}`}
+      href={`/product/${name.toLowerCase().trim().split(" ").join("-")}/${id}`}
     >
       <div className="flex flex-col border border-gray-100 dark:border-zinc-800 rounded-xl p-3 bg-white dark:bg-zinc-900 w-45 min-w-45 shadow-sm hover:shadow-md transition-shadow group">
         {/* Image Container */}
