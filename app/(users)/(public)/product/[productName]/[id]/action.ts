@@ -1,7 +1,7 @@
 import { prisma } from "@/app/libs/prisma";
 import { errorHandler, returnHandler } from "@/app/utils/utils";
 import { z } from "zod";
-
+import { client } from "@/app/libs/redis";
 export default async function getProductById(id: string) {
   const productId = z.object({
     id: z.coerce.number(),
@@ -9,6 +9,12 @@ export default async function getProductById(id: string) {
   const parse = productId.safeParse({ id: id });
 
   if (!parse.success) return null;
+
+  const cachedProduct = await client.get(`product:${parse.data.id}`);
+  if (cachedProduct) {
+    console.log("cached prdouct", cachedProduct);
+    return JSON.parse(cachedProduct);
+  }
 
   const [product, productErr] = await prisma.product
     .findUnique({
@@ -109,6 +115,11 @@ export default async function getProductById(id: string) {
 
   // console.dir(product, { depth: null, color: true });
   if (productErr) return null;
+
+  if (product) {
+    console.log("product", product);
+    await client.set(`product:${parse.data.id}`, JSON.stringify(product));
+  }
 
   return product;
 }

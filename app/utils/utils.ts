@@ -15,3 +15,8 @@ export const errorHandler = (error: unknown): [null, Error] => {
   console.error(e);
   return [null, e] as const;
 };
+
+export const getProductPath = (name: string, id: string | number) => {
+  const slug = name.toLowerCase().trim().split(" ").join("-");
+  return `/product/${slug}/${id}`;
+};
