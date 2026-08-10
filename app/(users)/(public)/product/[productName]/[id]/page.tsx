@@ -3,7 +3,9 @@
 import getProductById from "./action";
 import ProductClientPage from "./ProductClientPage";
 import { notFound } from "next/navigation";
-
+export const add = () => {
+  console.log(2 + 3);
+};
 export default async function ProductPage({
   params,
 }: {
@@ -15,6 +17,6 @@ export default async function ProductPage({
   if (!product) {
     notFound();
   }
-
+  add();
   return <ProductClientPage product={product} />;
 }
