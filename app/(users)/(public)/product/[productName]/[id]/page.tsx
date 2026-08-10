@@ -3,9 +3,9 @@
 import getProductById from "./action";
 import ProductClientPage from "./ProductClientPage";
 import { notFound } from "next/navigation";
-export async function add() {
+export const add = () => {
   console.log(2 + 3);
-}
+};
 export default async function ProductPage({
   params,
 }: {
