@@ -1,6 +1,7 @@
 "use server";
 import { prisma } from "@/app/libs/prisma";
 import { errorHandler, returnHandler } from "@/app/utils/utils";
+import { add } from "../../product/[productName]/[id]/page";
 export default async function getProductByCategory(category: string) {
   const [categoryWithProducts, categoryWithProductErr] = await prisma.category
     .findUnique({
@@ -75,6 +76,6 @@ export default async function getProductByCategory(category: string) {
   if (!categoryWithProducts) {
     return null;
   }
-
+  add();
   return categoryWithProducts;
 }
